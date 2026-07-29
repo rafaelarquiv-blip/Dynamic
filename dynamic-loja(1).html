@@ -1,0 +1,2375 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dynamic — Smartphones, Acessórios, Capas e Películas</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#080B12; --surface:#0F1420; --surface2:#141A28; --border:#1C2233;
+  --accent:#3B6EFF; --accent-bright:#5C8AFF; --electric:#00F5D4;
+  --white:#F0F4FF; --muted:#6B7A99; --danger:#FF3B6E; --warn:#FFBE00; --ok:#28C840;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--white);font-family:'Space Grotesk',sans-serif;overflow-x:hidden;min-height:100vh;}
+.hidden{display:none !important;}
+a{color:inherit;}
+button{font-family:inherit;cursor:pointer;}
+::-webkit-scrollbar{width:8px;height:8px;}
+::-webkit-scrollbar-track{background:var(--surface);}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px;}
+
+/* ===== NAV ===== */
+nav.store-nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:18px 60px;backdrop-filter:blur(12px);
+  background:rgba(8,11,18,0.85);border-bottom:1px solid var(--border);
+}
+.logo{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;letter-spacing:-0.5px;}
+.logo span{color:var(--electric);}
+.nav-center{display:flex;gap:32px;list-style:none;}
+.nav-center a{text-decoration:none;color:var(--muted);font-size:14px;font-weight:500;transition:color .2s;cursor:pointer;}
+.nav-center a:hover,.nav-center a.active{color:var(--white);}
+.nav-right{display:flex;align-items:center;gap:18px;}
+.icon-btn{
+  background:var(--surface);border:1px solid var(--border);border-radius:8px;
+  width:40px;height:40px;display:flex;align-items:center;justify-content:center;
+  font-size:17px;position:relative;transition:border-color .2s;
+}
+.icon-btn:hover{border-color:var(--accent);}
+.cart-badge{
+  position:absolute;top:-6px;right:-6px;background:var(--danger);color:#fff;
+  font-size:10px;font-weight:700;border-radius:50%;width:18px;height:18px;
+  display:flex;align-items:center;justify-content:center;
+}
+.admin-link{font-size:12px;color:var(--muted);text-decoration:none;border:1px solid var(--border);padding:8px 14px;border-radius:8px;transition:.2s;}
+.admin-link:hover{color:var(--electric);border-color:var(--electric);}
+
+/* ===== HERO ===== */
+.hero{
+  min-height:88vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:140px 40px 80px;position:relative;overflow:hidden;
+}
+.hero-glow{position:absolute;width:700px;height:700px;border-radius:50%;
+  background:radial-gradient(circle,rgba(59,110,255,0.18) 0%,transparent 70%);
+  top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(0,245,212,.08);
+  border:1px solid rgba(0,245,212,.25);border-radius:100px;padding:6px 16px;font-size:12px;
+  font-weight:600;color:var(--electric);letter-spacing:.8px;text-transform:uppercase;margin-bottom:28px;}
+.hero-badge::before{content:'';width:6px;height:6px;background:var(--electric);border-radius:50%;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.4;transform:scale(1.4);}}
+.hero h1{font-family:'Syne',sans-serif;font-size:clamp(44px,7vw,84px);font-weight:800;
+  line-height:.98;letter-spacing:-2px;max-width:900px;}
+.hero h1 .line-accent{display:block;background:linear-gradient(90deg,var(--accent-bright),var(--electric));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.hero p{color:var(--muted);font-size:17px;line-height:1.7;max-width:520px;margin:24px auto 40px;}
+.hero-actions{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
+.btn-primary{background:var(--accent);color:#fff;padding:15px 32px;border-radius:8px;font-weight:600;
+  font-size:14px;text-decoration:none;border:none;transition:all .2s;}
+.btn-primary:hover{background:var(--accent-bright);transform:translateY(-2px);box-shadow:0 12px 40px rgba(59,110,255,.35);}
+.btn-ghost{background:transparent;color:var(--white);padding:15px 32px;border-radius:8px;font-weight:600;
+  font-size:14px;text-decoration:none;border:1px solid var(--border);transition:all .2s;}
+.btn-ghost:hover{border-color:var(--muted);transform:translateY(-2px);}
+
+/* ===== CATEGORY STRIP ===== */
+.cat-strip{display:flex;justify-content:center;gap:16px;padding:0 60px 60px;flex-wrap:wrap;}
+.cat-pill{
+  background:var(--surface);border:1px solid var(--border);border-radius:14px;
+  padding:20px 28px;display:flex;align-items:center;gap:12px;min-width:200px;
+  transition:.2s;cursor:pointer;
+}
+.cat-pill:hover{border-color:var(--accent);transform:translateY(-3px);}
+.cat-pill .ic{font-size:24px;}
+.cat-pill strong{display:block;font-size:14px;}
+.cat-pill span{font-size:12px;color:var(--muted);}
+
+/* ===== SECTIONS ===== */
+.section{padding:80px 60px;max-width:1300px;margin:0 auto;}
+.section-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:40px;flex-wrap:wrap;gap:20px;}
+.section-eyebrow{font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--electric);margin-bottom:14px;}
+.section-title{font-family:'Syne',sans-serif;font-size:clamp(28px,3.5vw,40px);font-weight:800;letter-spacing:-1px;}
+
+.filters-bar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:32px;}
+.filter-chip{background:var(--surface);border:1px solid var(--border);color:var(--muted);
+  padding:8px 18px;border-radius:100px;font-size:13px;font-weight:600;transition:.2s;}
+.filter-chip.active,.filter-chip:hover{background:var(--accent);color:#fff;border-color:var(--accent);}
+
+.products-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+.product-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;
+  transition:transform .3s,border-color .3s;display:flex;flex-direction:column;
+}
+.product-card:hover{transform:translateY(-4px);border-color:rgba(59,110,255,.4);}
+.product-img{
+  height:180px;display:flex;align-items:center;justify-content:center;font-size:54px;
+  background:linear-gradient(135deg,var(--surface2),var(--bg));position:relative;overflow:hidden;cursor:pointer;
+}
+.product-img img{width:100%;height:100%;object-fit:cover;}
+.stock-badge{position:absolute;top:10px;left:10px;font-size:10px;font-weight:700;letter-spacing:.5px;
+  padding:4px 10px;border-radius:100px;text-transform:uppercase;}
+.stock-badge.in{background:rgba(40,200,64,.15);color:var(--ok);}
+.stock-badge.low{background:rgba(255,190,0,.15);color:var(--warn);}
+.stock-badge.out{background:rgba(255,59,110,.15);color:var(--danger);}
+.product-body{padding:18px 20px;flex:1;display:flex;flex-direction:column;}
+.product-cat{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;}
+.product-name{font-weight:700;font-size:15px;margin-bottom:6px;line-height:1.3;cursor:pointer;}
+.product-name:hover{color:var(--accent-bright);}
+.product-desc{font-size:12px;color:var(--muted);line-height:1.5;margin-bottom:10px;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.product-price-row{display:flex;align-items:baseline;gap:8px;margin:auto 0 14px;}
+.product-price{font-family:'Syne',sans-serif;font-weight:800;font-size:20px;}
+.product-oldprice{font-size:13px;color:var(--muted);text-decoration:line-through;}
+.add-cart-btn{
+  background:var(--accent);color:#fff;border:none;border-radius:8px;padding:10px;
+  font-weight:600;font-size:13px;width:100%;transition:.2s;
+}
+.add-cart-btn:hover{background:var(--accent-bright);}
+.add-cart-btn:disabled{background:var(--surface2);color:var(--muted);cursor:not-allowed;}
+
+/* ===== ADMIN PRODUCT TABLE RICH ===== */
+.prod-thumb-cell{width:72px;height:72px;border-radius:10px;overflow:hidden;background:var(--surface2);
+  display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0;}
+.prod-thumb-cell img{width:100%;height:100%;object-fit:cover;}
+.prod-name-cell strong{display:block;font-size:14px;margin-bottom:4px;}
+.prod-name-cell span{font-size:12px;color:var(--muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;max-width:220px;}
+.price-tag{font-family:'Syne',sans-serif;font-weight:800;font-size:16px;}
+.price-old{font-size:12px;color:var(--muted);text-decoration:line-through;}
+.saving-tag{background:rgba(0,245,212,.12);color:var(--electric);font-size:11px;font-weight:700;
+  padding:3px 8px;border-radius:5px;white-space:nowrap;}
+.stock-num{font-weight:700;font-size:14px;}
+
+/* admin product cards */
+.admin-prod-card{background:var(--bg);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:.2s;}
+.admin-prod-card:hover{border-color:rgba(59,110,255,.4);}
+.admin-prod-card-img{height:130px;display:flex;align-items:center;justify-content:center;font-size:44px;
+  background:linear-gradient(135deg,var(--surface2),var(--bg));overflow:hidden;position:relative;}
+.admin-prod-card-img img{width:100%;height:100%;object-fit:cover;}
+.admin-prod-card-body{padding:14px;}
+.admin-prod-card-cat{font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:4px;}
+.admin-prod-card-name{font-weight:700;font-size:13px;margin-bottom:10px;line-height:1.3;}
+.admin-prod-card-price{font-family:'Syne',sans-serif;font-weight:800;font-size:17px;margin-bottom:10px;}
+.admin-prod-card-actions{display:flex;gap:6px;}
+.admin-prod-card-actions button{flex:1;font-size:11px;padding:7px 0;}
+.img-upload-box{
+  border:2px dashed var(--border);border-radius:10px;padding:20px;text-align:center;
+  cursor:pointer;transition:.2s;background:var(--bg);position:relative;
+}
+.img-upload-box:hover{border-color:var(--accent);}
+.img-upload-box img{max-width:100%;max-height:140px;border-radius:8px;display:block;margin:0 auto;}
+.img-upload-box .upload-placeholder{color:var(--muted);font-size:13px;}
+.img-upload-box .upload-placeholder .ic{font-size:28px;display:block;margin-bottom:8px;}
+.img-upload-box input[type=file]{display:none;}
+.remove-img-btn{
+  margin-top:10px;background:var(--surface2);border:1px solid var(--border);color:var(--danger);
+  font-size:12px;padding:6px 14px;border-radius:6px;width:100%;
+}
+
+/* ===== PRODUCT DETAIL MODAL ===== */
+.product-detail-img{
+  width:100%;height:260px;border-radius:12px;background:linear-gradient(135deg,var(--surface2),var(--bg));
+  display:flex;align-items:center;justify-content:center;font-size:80px;overflow:hidden;margin-bottom:20px;
+}
+.product-detail-img img{width:100%;height:100%;object-fit:cover;}
+.product-detail-cat{font-size:12px;color:var(--electric);text-transform:uppercase;letter-spacing:.5px;font-weight:600;margin-bottom:8px;}
+.product-detail-name{font-family:'Syne',sans-serif;font-size:24px;font-weight:800;margin-bottom:14px;}
+.product-detail-desc{font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:20px;}
+
+/* ===== FOOTER ===== */
+footer{background:var(--surface);border-top:1px solid var(--border);padding:60px;
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;}
+.footer-left p{color:var(--muted);font-size:13px;margin-top:8px;}
+.footer-links{display:flex;gap:28px;flex-wrap:wrap;}
+.footer-links a{color:var(--muted);text-decoration:none;font-size:13px;transition:.2s;}
+.footer-links a:hover{color:var(--white);}
+
+.grid-bg{position:fixed;inset:0;background-image:linear-gradient(rgba(59,110,255,.04) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(59,110,255,.04) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:0;}
+
+/* ===== CART DRAWER ===== */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:300;backdrop-filter:blur(2px);}
+.cart-drawer{
+  position:fixed;top:0;right:0;height:100%;width:420px;background:var(--surface);
+  border-left:1px solid var(--border);z-index:301;display:flex;flex-direction:column;
+  transform:translateX(100%);transition:transform .3s;
+}
+.cart-drawer.open{transform:translateX(0);}
+.cart-head{padding:24px 28px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;}
+.cart-head h3{font-family:'Syne',sans-serif;font-size:18px;}
+.close-btn{background:none;border:none;color:var(--muted);font-size:20px;}
+.cart-items{flex:1;overflow-y:auto;padding:20px 28px;}
+.cart-item{display:flex;gap:14px;padding:16px 0;border-bottom:1px solid var(--border);align-items:center;}
+.cart-item-img{width:54px;height:54px;background:var(--surface2);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;}
+.cart-item-info{flex:1;}
+.cart-item-info strong{display:block;font-size:13px;margin-bottom:4px;}
+.cart-item-info span{font-size:12px;color:var(--muted);}
+.qty-controls{display:flex;align-items:center;gap:8px;margin-top:6px;}
+.qty-controls button{background:var(--surface2);border:1px solid var(--border);color:var(--white);
+  width:22px;height:22px;border-radius:5px;font-size:12px;}
+.cart-item-price{font-weight:700;font-size:14px;}
+.remove-item{color:var(--danger);font-size:11px;border:none;background:none;margin-top:6px;}
+.cart-empty{text-align:center;color:var(--muted);padding:60px 20px;font-size:14px;}
+.cart-foot{padding:24px 28px;border-top:1px solid var(--border);}
+.cart-total-row{display:flex;justify-content:space-between;margin-bottom:18px;font-family:'Syne',sans-serif;font-weight:700;font-size:18px;}
+.checkout-btn{width:100%;}
+
+/* ===== ADMIN LOGIN ===== */
+.admin-login-screen{
+  min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;
+}
+.login-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:18px;
+  padding:48px 44px;width:380px;position:relative;z-index:2;
+}
+.login-card .logo{display:block;text-align:center;margin-bottom:6px;font-size:26px;}
+.login-sub{text-align:center;color:var(--muted);font-size:13px;margin-bottom:32px;}
+.form-group{margin-bottom:18px;}
+.form-group label{display:block;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:8px;letter-spacing:.3px;}
+.form-group input,.form-group select,.form-group textarea{
+  width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;
+  padding:12px 14px;color:var(--white);font-size:14px;font-family:inherit;transition:border-color .2s;
+}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{outline:none;border-color:var(--accent);}
+.login-error{background:rgba(255,59,110,.1);border:1px solid rgba(255,59,110,.3);color:var(--danger);
+  font-size:13px;padding:10px 14px;border-radius:8px;margin-bottom:18px;}
+.login-hint{text-align:center;font-size:11px;color:var(--muted);margin-top:20px;}
+
+/* ===== ADMIN LAYOUT ===== */
+.admin-wrap{display:flex;min-height:100vh;}
+.admin-sidebar{
+  width:240px;background:var(--surface);border-right:1px solid var(--border);
+  display:flex;flex-direction:column;padding:24px 0;position:fixed;top:0;left:0;height:100vh;z-index:50;
+}
+.admin-sidebar .logo{padding:0 24px;margin-bottom:36px;}
+.admin-nav{list-style:none;flex:1;}
+.admin-nav-item{
+  display:flex;align-items:center;gap:12px;padding:13px 24px;color:var(--muted);
+  font-size:14px;font-weight:500;cursor:pointer;border-left:3px solid transparent;transition:.2s;
+}
+.admin-nav-item:hover{color:var(--white);background:rgba(255,255,255,.02);}
+.admin-nav-item.active{color:var(--white);border-left-color:var(--accent);background:rgba(59,110,255,.06);}
+.admin-nav-item .ic{font-size:16px;width:18px;text-align:center;}
+.admin-logout{padding:14px 24px;border-top:1px solid var(--border);color:var(--danger);font-size:13px;font-weight:600;cursor:pointer;}
+.admin-main{flex:1;margin-left:240px;padding:32px 40px;max-width:calc(100% - 240px);}
+.admin-topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:32px;}
+.admin-topbar h2{font-family:'Syne',sans-serif;font-size:26px;font-weight:800;}
+.admin-topbar .badge-user{font-size:13px;color:var(--muted);}
+
+.stat-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-bottom:32px;}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px 24px;}
+.stat-card .stat-label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;}
+.stat-card .stat-value{font-family:'Syne',sans-serif;font-size:30px;font-weight:800;}
+.stat-card .stat-delta{font-size:12px;margin-top:6px;}
+.stat-delta.up{color:var(--ok);}
+.stat-delta.down{color:var(--danger);}
+
+.admin-panel{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:28px;margin-bottom:24px;}
+.panel-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px;flex-wrap:wrap;gap:12px;}
+.panel-head h3{font-family:'Syne',sans-serif;font-size:18px;}
+
+table{width:100%;border-collapse:collapse;}
+table th{text-align:left;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;
+  padding:10px 14px;border-bottom:1px solid var(--border);}
+table td{padding:14px 14px;border-bottom:1px solid var(--border);font-size:13px;}
+table tr:last-child td{border-bottom:none;}
+.table-wrap{overflow-x:auto;}
+.tag{display:inline-block;font-size:11px;font-weight:700;padding:4px 10px;border-radius:100px;text-transform:uppercase;letter-spacing:.3px;}
+.tag.in{background:rgba(40,200,64,.15);color:var(--ok);}
+.tag.low{background:rgba(255,190,0,.15);color:var(--warn);}
+.tag.out{background:rgba(255,59,110,.15);color:var(--danger);}
+.tag.active{background:rgba(0,245,212,.12);color:var(--electric);}
+.tag.inactive{background:rgba(107,122,153,.15);color:var(--muted);}
+.tag.pending{background:rgba(255,190,0,.15);color:var(--warn);}
+.tag.done{background:rgba(40,200,64,.15);color:var(--ok);}
+
+.row-actions{display:flex;gap:8px;}
+.mini-btn{background:var(--surface2);border:1px solid var(--border);color:var(--white);
+  padding:6px 12px;border-radius:6px;font-size:12px;font-weight:600;transition:.2s;}
+.mini-btn:hover{border-color:var(--accent);}
+.mini-btn.danger:hover{border-color:var(--danger);color:var(--danger);}
+
+.btn-sm{background:var(--accent);color:#fff;border:none;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:600;transition:.2s;}
+.btn-sm:hover{background:var(--accent-bright);}
+.btn-sm.outline{background:transparent;border:1px solid var(--border);color:var(--white);}
+.btn-sm.outline:hover{border-color:var(--muted);}
+
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:400;display:flex;align-items:center;justify-content:center;}
+.modal-box{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:32px;width:480px;max-height:86vh;overflow-y:auto;}
+.modal-box h3{font-family:'Syne',sans-serif;font-size:19px;margin-bottom:22px;}
+.modal-actions{display:flex;gap:10px;margin-top:24px;justify-content:flex-end;}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+
+.toggle-switch{position:relative;width:42px;height:24px;background:var(--surface2);border-radius:100px;border:1px solid var(--border);cursor:pointer;flex-shrink:0;}
+.toggle-switch.on{background:var(--accent);}
+.toggle-switch::after{content:'';position:absolute;width:18px;height:18px;background:#fff;border-radius:50%;top:2px;left:2px;transition:.2s;}
+.toggle-switch.on::after{left:21px;}
+
+.api-key-row{display:flex;align-items:center;gap:10px;background:var(--bg);border:1px solid var(--border);
+  border-radius:8px;padding:12px 16px;font-family:'Courier New',monospace;font-size:13px;color:var(--electric);}
+.api-key-row span{flex:1;overflow:hidden;text-overflow:ellipsis;}
+.copy-btn{background:var(--surface2);border:1px solid var(--border);color:var(--white);font-size:11px;padding:5px 10px;border-radius:6px;}
+
+.toast{position:fixed;bottom:30px;right:30px;background:var(--surface);border:1px solid var(--electric);
+  color:var(--white);padding:14px 22px;border-radius:10px;font-size:13px;font-weight:600;z-index:500;
+  box-shadow:0 10px 30px rgba(0,0,0,.4);display:flex;align-items:center;gap:10px;transform:translateY(100px);opacity:0;transition:.3s;}
+.toast.show{transform:translateY(0);opacity:1;}
+
+.search-box{position:relative;}
+.search-box input{padding-left:38px;width:240px;}
+.search-box::before{content:'🔍';position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:13px;}
+
+.empty-state{text-align:center;padding:50px 20px;color:var(--muted);}
+
+/* ===== MBWAY / PAYMENT ===== */
+.payment-methods{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px;}
+.pay-method-card{
+  background:var(--bg);border:2px solid var(--border);border-radius:12px;padding:18px 14px;
+  text-align:center;cursor:pointer;transition:.2s;
+}
+.pay-method-card:hover{border-color:var(--muted);}
+.pay-method-card.selected{border-color:var(--accent);background:rgba(59,110,255,.06);}
+.pay-method-card .pm-icon{font-size:28px;margin-bottom:8px;}
+.pay-method-card .pm-name{font-size:13px;font-weight:700;}
+.pay-method-card .pm-sub{font-size:11px;color:var(--muted);margin-top:2px;}
+.pay-method-card.disabled{opacity:.4;cursor:not-allowed;}
+
+.mbway-box{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:24px;margin-top:16px;}
+.mbway-logo{display:flex;align-items:center;gap:10px;margin-bottom:18px;}
+.mbway-logo .mb-tag{background:#E60000;color:#fff;font-weight:800;font-size:13px;padding:6px 12px;border-radius:6px;letter-spacing:.5px;}
+.mbway-steps{list-style:none;margin:18px 0;}
+.mbway-steps li{display:flex;gap:12px;padding:10px 0;font-size:13px;color:var(--muted);align-items:flex-start;}
+.mbway-steps li .step-num{
+  background:var(--surface2);border:1px solid var(--border);width:22px;height:22px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--white);flex-shrink:0;
+}
+.mbway-status{display:flex;align-items:center;gap:10px;padding:14px 16px;border-radius:10px;font-size:13px;font-weight:600;margin-top:18px;}
+.mbway-status.waiting{background:rgba(255,190,0,.1);color:var(--warn);border:1px solid rgba(255,190,0,.25);}
+.mbway-status.success{background:rgba(40,200,64,.1);color:var(--ok);border:1px solid rgba(40,200,64,.25);}
+.mbway-status.error{background:rgba(255,59,110,.1);color:var(--danger);border:1px solid rgba(255,59,110,.25);}
+.spinner{
+  width:16px;height:16px;border:2px solid rgba(255,190,0,.3);border-top-color:var(--warn);
+  border-radius:50%;animation:spin 0.8s linear infinite;flex-shrink:0;
+}
+@keyframes spin{to{transform:rotate(360deg);}}
+.phone-input-row{display:flex;gap:10px;}
+.phone-prefix{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px 14px;font-size:14px;color:var(--muted);flex-shrink:0;}
+
+.pay-summary-row{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);padding:6px 0;}
+.pay-summary-total{display:flex;justify-content:space-between;font-family:'Syne',sans-serif;font-weight:800;font-size:18px;padding-top:12px;margin-top:8px;border-top:1px solid var(--border);}
+
+.gateway-card{display:flex;align-items:center;justify-content:space-between;padding:18px 0;border-bottom:1px solid var(--border);}
+.gateway-card:last-child{border-bottom:none;}
+.gateway-info{display:flex;align-items:center;gap:14px;}
+.gateway-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;background:var(--surface2);flex-shrink:0;}
+.gateway-name{font-weight:700;font-size:14px;}
+.gateway-desc{font-size:12px;color:var(--muted);margin-top:2px;}
+
+@media (max-width:1100px){
+  .products-grid{grid-template-columns:repeat(2,1fr);}
+  .stat-cards{grid-template-columns:repeat(2,1fr);}
+}
+/* ===== FEATURED CAROUSEL ===== */
+.featured-section{padding:0 60px 60px;}
+.featured-carousel{
+  position:relative;max-width:1300px;margin:0 auto;border-radius:20px;overflow:hidden;
+  height:340px;border:1px solid var(--border);background:var(--surface);
+}
+.featured-slide{
+  position:absolute;inset:0;display:flex;align-items:center;
+  opacity:0;transition:opacity .6s ease;pointer-events:none;
+}
+.featured-slide.active{opacity:1;pointer-events:auto;}
+.featured-slide .fs-bg{
+  position:absolute;inset:0;background-size:cover;background-position:center;
+}
+.featured-slide .fs-bg.no-image{background:linear-gradient(135deg,var(--surface2),var(--bg));
+  display:flex;align-items:center;justify-content:center;font-size:90px;}
+.featured-slide .fs-overlay{
+  position:absolute;inset:0;background:linear-gradient(90deg,rgba(8,11,18,.92) 0%,rgba(8,11,18,.55) 50%,rgba(8,11,18,.15) 100%);
+}
+.featured-slide .fs-content{position:relative;z-index:2;padding:0 60px;max-width:560px;}
+.featured-slide .fs-eyebrow{font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--electric);margin-bottom:14px;}
+.featured-slide .fs-title{font-family:'Syne',sans-serif;font-size:34px;font-weight:800;letter-spacing:-1px;margin-bottom:12px;line-height:1.1;}
+.featured-slide .fs-desc{font-size:14px;color:var(--muted);line-height:1.6;margin-bottom:22px;max-width:440px;}
+.featured-slide .fs-price{font-family:'Syne',sans-serif;font-size:24px;font-weight:800;color:var(--electric);margin-bottom:18px;}
+
+.featured-empty{
+  display:flex;align-items:center;justify-content:center;height:100%;color:var(--muted);font-size:14px;text-align:center;
+}
+.carousel-dots{position:absolute;bottom:20px;left:60px;display:flex;gap:8px;z-index:3;}
+.carousel-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.25);cursor:pointer;transition:.2s;}
+.carousel-dot.active{background:var(--electric);width:24px;border-radius:4px;}
+.carousel-arrow{
+  position:absolute;top:50%;transform:translateY(-50%);width:40px;height:40px;border-radius:50%;
+  background:rgba(8,11,18,.6);border:1px solid var(--border);color:#fff;font-size:16px;z-index:3;
+  display:flex;align-items:center;justify-content:center;transition:.2s;
+}
+.carousel-arrow:hover{background:var(--accent);}
+.carousel-arrow.prev{left:18px;}
+.carousel-arrow.next{right:18px;}
+
+/* ===== STORE SEARCH ===== */
+.store-search-wrap{position:relative;display:flex;align-items:center;gap:0;}
+.store-search-box{
+  display:flex;align-items:center;
+  position:absolute;right:48px;top:50%;transform:translateY(-50%);
+  background:var(--surface);border:1px solid var(--accent);border-radius:10px;
+  overflow:hidden;width:0;opacity:0;transition:width .3s ease,opacity .25s ease;pointer-events:none;
+}
+.store-search-box.open{width:260px;opacity:1;pointer-events:auto;}
+.store-search-box input{
+  background:transparent;border:none;color:var(--white);font-family:inherit;font-size:14px;
+  padding:10px 14px;outline:none;width:100%;
+}
+.store-search-box input::placeholder{color:var(--muted);}
+.store-search-clear{background:none;border:none;color:var(--muted);padding:8px 12px;font-size:14px;cursor:pointer;flex-shrink:0;}
+.store-search-clear:hover{color:var(--danger);}
+
+.search-overlay{
+  position:fixed;inset:0;top:73px;z-index:150;
+  background:rgba(8,11,18,.97);backdrop-filter:blur(8px);
+  overflow-y:auto;
+}
+.search-overlay-inner{max-width:1300px;margin:0 auto;padding:40px 60px;}
+.search-overlay-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;flex-wrap:wrap;gap:12px;}
+.search-results-title h2{font-family:'Syne',sans-serif;font-size:26px;font-weight:800;margin-bottom:4px;}
+.search-results-title p{color:var(--muted);font-size:14px;}
+.search-overlay-close{background:var(--surface);border:1px solid var(--border);color:var(--muted);padding:10px 18px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;transition:.2s;font-family:inherit;}
+.search-overlay-close:hover{border-color:var(--danger);color:var(--danger);}
+.search-results-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+.search-no-results{text-align:center;padding:80px 20px;color:var(--muted);}
+.search-no-results .nr-icon{font-size:52px;margin-bottom:16px;}
+.search-no-results h3{font-family:'Syne',sans-serif;font-size:22px;margin-bottom:8px;color:var(--white);}
+.search-highlight{background:rgba(0,245,212,.15);color:var(--electric);border-radius:3px;padding:0 2px;}
+@media(max-width:900px){
+  .store-search-box.open{width:180px;}
+  .search-overlay-inner{padding:24px 18px;}
+  .search-results-grid{grid-template-columns:repeat(2,1fr);}
+}
+.featured-slots-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+.featured-slot-card{background:var(--bg);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:border-color .2s;}
+.featured-slot-card:hover{border-color:rgba(59,110,255,.35);}
+.featured-slot-header{display:flex;align-items:center;gap:10px;padding:14px 18px;border-bottom:1px solid var(--border);background:var(--surface2);}
+.slot-number{width:26px;height:26px;background:var(--accent);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;flex-shrink:0;}
+.slot-label{font-weight:700;font-size:14px;}
+.featured-slot-img-wrap{padding:14px 18px 0;}
+.featured-slot-img{
+  width:100%;height:150px;border-radius:10px;border:2px dashed var(--border);background:var(--surface2);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;
+  overflow:hidden;transition:.2s;position:relative;
+}
+.featured-slot-img:hover{border-color:var(--accent);}
+.featured-slot-img img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;}
+.featured-slot-img.has-image{border-style:solid;border-color:var(--accent);}
+.slot-upload-placeholder{display:flex;flex-direction:column;align-items:center;gap:6px;color:var(--muted);font-size:12px;text-align:center;}
+.slot-upload-placeholder span{font-size:28px;}
+.slot-remove-btn{display:block;width:calc(100% - 36px);margin:8px 18px 0;background:transparent;border:1px solid rgba(255,59,110,.3);color:var(--danger);border-radius:7px;padding:7px;font-size:12px;font-weight:600;cursor:pointer;transition:.2s;font-family:inherit;}
+.slot-remove-btn:hover{background:rgba(255,59,110,.08);}
+.slot-fields{padding:14px 18px 18px;display:flex;flex-direction:column;gap:0;}
+.slot-fields .form-group{margin-bottom:12px;}
+.slot-fields .form-group:last-child{margin-bottom:0;}
+.slot-row2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+@media(max-width:900px){.featured-slots-grid{grid-template-columns:1fr;}.slot-row2{grid-template-columns:1fr;}}
+.featured-admin-card{
+  display:flex;gap:16px;align-items:center;background:var(--bg);border:1px solid var(--border);
+  border-radius:12px;padding:16px;margin-bottom:12px;
+}
+.featured-admin-thumb{
+  width:90px;height:60px;border-radius:8px;background:var(--surface2);flex-shrink:0;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;font-size:24px;
+}
+.featured-admin-thumb img{width:100%;height:100%;object-fit:cover;}
+.featured-admin-info{flex:1;min-width:0;}
+.featured-admin-info strong{font-size:14px;display:block;}
+.featured-admin-info span{font-size:12px;color:var(--muted);}
+.featured-admin-actions{display:flex;gap:8px;flex-shrink:0;}
+
+@media (max-width:900px){
+  nav.store-nav{padding:14px 20px;}
+  .nav-center{display:none;}
+  .section,.hero{padding-left:20px;padding-right:20px;}
+  .admin-sidebar{transform:translateX(-100%);transition:.3s;}
+  .admin-sidebar.open{transform:translateX(0);}
+  .admin-main{margin-left:0;padding:24px 18px;max-width:100%;}
+  .cart-drawer{width:100%;}
+  .grid-2{grid-template-columns:1fr;}
+  .featured-carousel{height:auto;min-height:280px;}
+  .featured-slide .fs-content{padding:0 24px;max-width:100%;}
+  .featured-slide .fs-title{font-size:24px;}
+  .carousel-dots{left:24px;}
+  .featured-section{padding:0 20px 40px;}
+}
+</style>
+</head>
+<body>
+
+<div class="grid-bg"></div>
+
+<!-- ============ TOAST ============ -->
+<div class="toast" id="toast"></div>
+
+<!-- ============ STORE VIEW ============ -->
+<div id="storeView">
+
+  <nav class="store-nav">
+    <div class="logo">Dyn<span>∞</span>mic</div>
+    <ul class="nav-center">
+      <li><a onclick="filterCategory('all')" class="nav-link active">Início</a></li>
+      <li><a onclick="filterCategory('Smartphones')" class="nav-link">Smartphones</a></li>
+      <li><a onclick="filterCategory('Acessórios')" class="nav-link">Acessórios</a></li>
+      <li><a onclick="filterCategory('Capas')" class="nav-link">Capas</a></li>
+      <li><a onclick="filterCategory('Películas')" class="nav-link">Películas</a></li>
+    </ul>
+    <div class="nav-right">
+      <div class="store-search-wrap" id="storeSearchWrap">
+        <button class="icon-btn" onclick="toggleStoreSearch()" id="searchToggleBtn" title="Pesquisar">🔍</button>
+        <div class="store-search-box" id="storeSearchBox">
+          <input type="text" id="storeSearchInput" placeholder="Pesquisar produtos…" oninput="doStoreSearch()" onkeydown="if(event.key==='Escape')closeStoreSearch()">
+          <button class="store-search-clear" onclick="clearStoreSearch()" id="storeSearchClear">✕</button>
+        </div>
+      </div>
+      <button class="icon-btn" onclick="openCart()">🛒<span class="cart-badge" id="cartBadge">0</span></button>
+      <a href="#" class="admin-link" onclick="goToAdmin();return false;">Área Administrativa</a>
+    </div>
+  </nav>
+
+  <!-- SEARCH RESULTS OVERLAY -->
+  <div id="searchResultsOverlay" class="search-overlay hidden">
+    <div class="search-overlay-inner">
+      <div class="search-overlay-head">
+        <div id="searchResultsTitle" class="search-results-title"></div>
+        <button class="search-overlay-close" onclick="clearStoreSearch()">✕ Fechar</button>
+      </div>
+      <div id="searchResultsGrid" class="search-results-grid"></div>
+    </div>
+  </div>
+
+  <section class="hero">
+    <div class="hero-glow"></div>
+    <div class="hero-badge">Entrega em 24h em Portugal Continental</div>
+    <h1>O teu telefone.<br><span class="line-accent">Equipado a sério.</span></h1>
+    <p>Smartphones, capas, películas e acessórios originais. Garantia de 2 anos em todos os produtos.</p>
+    <div class="hero-actions">
+      <a href="#catalogo" class="btn-primary">Ver catálogo</a>
+      <a onclick="filterCategory('Smartphones')" class="btn-ghost">Ver smartphones →</a>
+    </div>
+  </section>
+
+  <section class="featured-section" id="destaques">
+    <div class="featured-carousel" id="featuredCarousel"></div>
+  </section>
+
+  <div class="cat-strip">
+    <div class="cat-pill" onclick="filterCategory('Smartphones')"><div class="ic">📱</div><div><strong>Smartphones</strong><span>Os mais recentes</span></div></div>
+    <div class="cat-pill" onclick="filterCategory('Capas')"><div class="ic">🛡️</div><div><strong>Capas</strong><span>Proteção e estilo</span></div></div>
+    <div class="cat-pill" onclick="filterCategory('Películas')"><div class="ic">✨</div><div><strong>Películas</strong><span>Vidro temperado</span></div></div>
+    <div class="cat-pill" onclick="filterCategory('Acessórios')"><div class="ic">🎧</div><div><strong>Acessórios</strong><span>Carregadores, fones e mais</span></div></div>
+  </div>
+
+  <section class="section" id="catalogo">
+    <div class="section-head">
+      <div>
+        <div class="section-eyebrow">Catálogo</div>
+        <h2 class="section-title">Os nossos produtos</h2>
+      </div>
+    </div>
+    <div class="filters-bar" id="filtersBar">
+      <button class="filter-chip active" data-cat="all" onclick="filterCategory('all')">Todos</button>
+      <button class="filter-chip" data-cat="Smartphones" onclick="filterCategory('Smartphones')">Smartphones</button>
+      <button class="filter-chip" data-cat="Acessórios" onclick="filterCategory('Acessórios')">Acessórios</button>
+      <button class="filter-chip" data-cat="Capas" onclick="filterCategory('Capas')">Capas</button>
+      <button class="filter-chip" data-cat="Películas" onclick="filterCategory('Películas')">Películas</button>
+    </div>
+    <div class="products-grid" id="productsGrid"></div>
+  </section>
+
+  <footer>
+    <div class="footer-left">
+      <div class="logo">Dyn<span style="color:var(--electric)">∞</span>mic</div>
+      <p>© 2026 Dynamic Tech Store, Lda. Lisboa, Portugal.</p>
+    </div>
+    <div class="footer-links">
+      <a href="#">Termos</a><a href="#">Privacidade</a><a href="#">Trocas e Devoluções</a><a href="#">Contactos</a>
+    </div>
+  </footer>
+</div>
+
+<!-- ============ CART DRAWER ============ -->
+<div id="cartOverlay" class="overlay hidden" onclick="closeCart()"></div>
+<div id="cartDrawer" class="cart-drawer">
+  <div class="cart-head">
+    <h3>O teu carrinho</h3>
+    <button class="close-btn" onclick="closeCart()">✕</button>
+  </div>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="cart-foot">
+    <div class="cart-total-row"><span>Total</span><span id="cartTotal">€0,00</span></div>
+    <button class="btn-primary checkout-btn" onclick="checkout()">Finalizar compra</button>
+  </div>
+</div>
+
+<!-- ============ ADMIN LOGIN ============ -->
+<div id="adminLoginView" class="admin-login-screen hidden">
+  <div class="hero-glow" style="position:fixed;"></div>
+  <div class="login-card">
+    <div class="logo">Dyn<span style="color:var(--electric)">∞</span>mic</div>
+    <div class="login-sub">Área administrativa</div>
+    <div id="loginError" class="login-error hidden">Email ou senha incorretos.</div>
+    <div class="form-group">
+      <label>Email</label>
+      <input type="text" id="loginEmail" placeholder="admin@dynamic.pt" value="admin@dynamic.pt">
+    </div>
+    <div class="form-group">
+      <label>Senha</label>
+      <input type="password" id="loginPassword" placeholder="••••••••">
+    </div>
+    <button class="btn-primary" style="width:100%" onclick="tryLogin()">Entrar</button>
+    <div class="login-hint">Demo: admin@dynamic.pt / dynamic2026</div>
+    <div class="login-hint"><a onclick="goToStore()" style="cursor:pointer;color:var(--accent-bright)">← Voltar à loja</a></div>
+  </div>
+</div>
+
+<!-- ============ ADMIN PANEL ============ -->
+<div id="adminView" class="admin-wrap hidden">
+  <aside class="admin-sidebar" id="adminSidebar">
+    <div class="logo">Dyn<span style="color:var(--electric)">∞</span>mic</div>
+    <ul class="admin-nav">
+      <li class="admin-nav-item active" data-view="dashboard" onclick="switchAdminView('dashboard')"><span class="ic">📊</span> Dashboard</li>
+      <li class="admin-nav-item" data-view="produtos" onclick="switchAdminView('produtos')"><span class="ic">📦</span> Produtos</li>
+      <li class="admin-nav-item" data-view="clientes" onclick="switchAdminView('clientes')"><span class="ic">👥</span> Gestão de Clientes</li>
+      <li class="admin-nav-item" data-view="pedidos" onclick="switchAdminView('pedidos')"><span class="ic">🧾</span> Pedidos</li>
+      <li class="admin-nav-item" data-view="pagina" onclick="switchAdminView('pagina')"><span class="ic">🎨</span> Gestão da Página</li>
+      <li class="admin-nav-item" data-view="api" onclick="switchAdminView('api')"><span class="ic">🔌</span> Gestão da API</li>
+      <li class="admin-nav-item" data-view="config" onclick="switchAdminView('config')"><span class="ic">⚙️</span> Configurações</li>
+    </ul>
+    <div class="admin-logout" onclick="logoutAdmin()">⎋ Terminar sessão</div>
+  </aside>
+
+  <main class="admin-main">
+
+    <!-- DASHBOARD -->
+    <section id="view-dashboard" class="admin-section">
+      <div class="admin-topbar">
+        <h2>Dashboard</h2>
+        <span class="badge-user">Bem-vindo, Admin</span>
+      </div>
+      <div class="stat-cards">
+        <div class="stat-card"><div class="stat-label">Vendas hoje</div><div class="stat-value">€1.284</div><div class="stat-delta up">▲ 12% vs ontem</div></div>
+        <div class="stat-card"><div class="stat-label">Pedidos pendentes</div><div class="stat-value" id="statPendentes">0</div><div class="stat-delta">A aguardar processamento</div></div>
+        <div class="stat-card"><div class="stat-label">Clientes registados</div><div class="stat-value" id="statClientes">0</div><div class="stat-delta up">▲ 4 esta semana</div></div>
+        <div class="stat-card"><div class="stat-label">Produtos em stock baixo</div><div class="stat-value" id="statStockBaixo">0</div><div class="stat-delta down">Reabastecer em breve</div></div>
+      </div>
+      <div class="admin-panel">
+        <div class="panel-head"><h3>Pedidos recentes</h3></div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>ID</th><th>Cliente</th><th>Produtos</th><th>Total</th><th>Estado</th></tr></thead>
+            <tbody id="dashOrdersBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRODUTOS -->
+    <section id="view-produtos" class="admin-section hidden">
+      <div class="admin-topbar">
+        <h2>Produtos</h2>
+        <button class="btn-sm" onclick="openProductModal()">+ Novo produto</button>
+      </div>
+
+      <div class="admin-panel">
+        <div class="panel-head" style="flex-wrap:wrap;gap:12px;">
+          <h3>Catálogo completo <span id="prodCount" style="font-size:14px;color:var(--muted);font-weight:400;"></span></h3>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+            <div class="search-box"><input type="text" id="prodSearch" placeholder="Pesquisar produto..." oninput="renderAdminProducts()"></div>
+            <select id="prodCatFilter" onchange="renderAdminProducts()" style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 14px;color:var(--white);font-size:13px;font-family:inherit;">
+              <option value="">Todas as categorias</option>
+              <option>Smartphones</option><option>Acessórios</option><option>Capas</option><option>Películas</option>
+            </select>
+            <div style="display:flex;border:1px solid var(--border);border-radius:8px;overflow:hidden;">
+              <button id="viewTableBtn" class="mini-btn" style="border:none;border-radius:0;background:var(--accent);color:#fff;" onclick="setProductView('table')">☰ Tabela</button>
+              <button id="viewCardBtn" class="mini-btn" style="border:none;border-radius:0;" onclick="setProductView('cards')">⊞ Cards</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- TABELA -->
+        <div id="prodTableView">
+          <div class="table-wrap">
+            <table id="prodTable">
+              <thead>
+                <tr>
+                  <th style="width:80px;">Foto</th>
+                  <th>Produto</th>
+                  <th>Categoria</th>
+                  <th>Preço</th>
+                  <th>Preço anterior</th>
+                  <th>Poupança</th>
+                  <th>Stock</th>
+                  <th>Estado</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody id="adminProductsBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- CARDS -->
+        <div id="prodCardsView" class="hidden">
+          <div id="adminProductsCards" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin-top:8px;"></div>
+        </div>
+
+        <div id="prodEmpty" class="empty-state hidden">Nenhum produto encontrado.</div>
+      </div>
+    </section>
+
+    <!-- CLIENTES -->
+    <section id="view-clientes" class="admin-section hidden">
+      <div class="admin-topbar">
+        <h2>Gestão de Clientes</h2>
+        <button class="btn-sm" onclick="openClientModal()">+ Novo cliente</button>
+      </div>
+      <div class="admin-panel">
+        <div class="panel-head">
+          <h3>Lista de clientes</h3>
+          <div class="search-box"><input type="text" id="clientSearch" placeholder="Pesquisar cliente..." oninput="renderClients()"></div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Nome</th><th>Email</th><th>Telefone</th><th>Pedidos</th><th>Total gasto</th><th>Estado</th><th>Ações</th></tr></thead>
+            <tbody id="clientsBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- PEDIDOS -->
+    <section id="view-pedidos" class="admin-section hidden">
+      <div class="admin-topbar"><h2>Pedidos</h2></div>
+      <div class="admin-panel">
+        <div class="panel-head"><h3>Todos os pedidos</h3></div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>ID</th><th>Cliente</th><th>Data</th><th>Produtos</th><th>Total</th><th>Estado</th><th>Ações</th></tr></thead>
+            <tbody id="ordersBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- GESTÃO DA PÁGINA -->
+    <section id="view-pagina" class="admin-section hidden">
+      <div class="admin-topbar"><h2>Gestão da Página</h2></div>
+
+      <div class="admin-panel">
+        <div class="panel-head"><h3>Conteúdo do Hero</h3></div>
+        <div class="grid-2">
+          <div class="form-group"><label>Título principal</label><input type="text" id="cfgHeroTitle"></div>
+          <div class="form-group"><label>Selo/Badge</label><input type="text" id="cfgHeroBadge"></div>
+        </div>
+        <div class="form-group"><label>Subtítulo</label><textarea id="cfgHeroSub" rows="2"></textarea></div>
+        <button class="btn-sm" onclick="saveSiteConfig()">Guardar alterações</button>
+      </div>
+
+      <div class="admin-panel">
+        <div class="panel-head"><h3>Aparência</h3></div>
+        <div class="grid-2">
+          <div class="form-group">
+            <label>Cor de destaque (accent)</label>
+            <input type="color" id="cfgAccent" style="height:44px;padding:4px;">
+          </div>
+          <div class="form-group">
+            <label>Cor elétrica (secundária)</label>
+            <input type="color" id="cfgElectric" style="height:44px;padding:4px;">
+          </div>
+        </div>
+        <button class="btn-sm" onclick="saveSiteConfig()">Aplicar cores</button>
+      </div>
+
+
+      <div class="admin-panel">
+        <div class="panel-head">
+          <h3>Imagens de Destaque</h3>
+          <button class="btn-sm" onclick="saveAllFeatured()">💾 Guardar todos</button>
+        </div>
+        <p style="color:var(--muted);font-size:12px;margin-bottom:24px;">
+          Os destaques aparecem num carrossel logo abaixo da capa da loja. Usa-os para promoções, lançamentos ou produtos em evidência. Preenche até 4 slots — os vazios são ocultados automaticamente.
+        </p>
+        <div class="featured-slots-grid">
+          <!-- SLOT 1 -->
+          <div class="featured-slot-card">
+            <div class="featured-slot-header"><span class="slot-number">1</span><span class="slot-label">Destaque 1</span></div>
+            <div class="featured-slot-img-wrap">
+              <div class="featured-slot-img" id="slotImg0" onclick="document.getElementById('slotFile0').click()">
+                <div class="slot-upload-placeholder" id="slotPh0"><span>🖼️</span><small>Clica para adicionar imagem</small><small style="color:var(--border)">1600×800px recomendado</small></div>
+                <img id="slotPreview0" class="hidden" alt="Destaque 1">
+                <input type="file" id="slotFile0" accept="image/*" onchange="handleSlotImage(0,event)" style="display:none">
+              </div>
+              <button class="slot-remove-btn hidden" id="slotRemove0" onclick="removeSlotImage(0)">✕ Remover imagem</button>
+            </div>
+            <div class="slot-fields">
+              <div class="form-group"><label>Categoria / Selo</label><input type="text" id="slotEyebrow0" placeholder="Ex: Novidade, Promoção…"></div>
+              <div class="form-group"><label>Título</label><input type="text" id="slotTitle0" placeholder="Título do destaque"></div>
+              <div class="form-group"><label>Descrição</label><textarea id="slotDesc0" rows="2" placeholder="Texto curto..."></textarea></div>
+              <div class="slot-row2">
+                <div class="form-group"><label>Preço</label><input type="text" id="slotPrice0" placeholder="Ex: Desde €299"></div>
+                <div class="form-group"><label>Ligar a categoria</label>
+                  <select id="slotCat0"><option value="">Nenhuma</option><option>Smartphones</option><option>Acessórios</option><option>Capas</option><option>Películas</option></select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- SLOT 2 -->
+          <div class="featured-slot-card">
+            <div class="featured-slot-header"><span class="slot-number">2</span><span class="slot-label">Destaque 2</span></div>
+            <div class="featured-slot-img-wrap">
+              <div class="featured-slot-img" id="slotImg1" onclick="document.getElementById('slotFile1').click()">
+                <div class="slot-upload-placeholder" id="slotPh1"><span>🖼️</span><small>Clica para adicionar imagem</small><small style="color:var(--border)">1600×800px recomendado</small></div>
+                <img id="slotPreview1" class="hidden" alt="Destaque 2">
+                <input type="file" id="slotFile1" accept="image/*" onchange="handleSlotImage(1,event)" style="display:none">
+              </div>
+              <button class="slot-remove-btn hidden" id="slotRemove1" onclick="removeSlotImage(1)">✕ Remover imagem</button>
+            </div>
+            <div class="slot-fields">
+              <div class="form-group"><label>Categoria / Selo</label><input type="text" id="slotEyebrow1" placeholder="Ex: Novidade, Promoção…"></div>
+              <div class="form-group"><label>Título</label><input type="text" id="slotTitle1" placeholder="Título do destaque"></div>
+              <div class="form-group"><label>Descrição</label><textarea id="slotDesc1" rows="2" placeholder="Texto curto..."></textarea></div>
+              <div class="slot-row2">
+                <div class="form-group"><label>Preço</label><input type="text" id="slotPrice1" placeholder="Ex: Desde €299"></div>
+                <div class="form-group"><label>Ligar a categoria</label>
+                  <select id="slotCat1"><option value="">Nenhuma</option><option>Smartphones</option><option>Acessórios</option><option>Capas</option><option>Películas</option></select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- SLOT 3 -->
+          <div class="featured-slot-card">
+            <div class="featured-slot-header"><span class="slot-number">3</span><span class="slot-label">Destaque 3</span></div>
+            <div class="featured-slot-img-wrap">
+              <div class="featured-slot-img" id="slotImg2" onclick="document.getElementById('slotFile2').click()">
+                <div class="slot-upload-placeholder" id="slotPh2"><span>🖼️</span><small>Clica para adicionar imagem</small><small style="color:var(--border)">1600×800px recomendado</small></div>
+                <img id="slotPreview2" class="hidden" alt="Destaque 3">
+                <input type="file" id="slotFile2" accept="image/*" onchange="handleSlotImage(2,event)" style="display:none">
+              </div>
+              <button class="slot-remove-btn hidden" id="slotRemove2" onclick="removeSlotImage(2)">✕ Remover imagem</button>
+            </div>
+            <div class="slot-fields">
+              <div class="form-group"><label>Categoria / Selo</label><input type="text" id="slotEyebrow2" placeholder="Ex: Novidade, Promoção…"></div>
+              <div class="form-group"><label>Título</label><input type="text" id="slotTitle2" placeholder="Título do destaque"></div>
+              <div class="form-group"><label>Descrição</label><textarea id="slotDesc2" rows="2" placeholder="Texto curto..."></textarea></div>
+              <div class="slot-row2">
+                <div class="form-group"><label>Preço</label><input type="text" id="slotPrice2" placeholder="Ex: Desde €299"></div>
+                <div class="form-group"><label>Ligar a categoria</label>
+                  <select id="slotCat2"><option value="">Nenhuma</option><option>Smartphones</option><option>Acessórios</option><option>Capas</option><option>Películas</option></select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- SLOT 4 -->
+          <div class="featured-slot-card">
+            <div class="featured-slot-header"><span class="slot-number">4</span><span class="slot-label">Destaque 4</span></div>
+            <div class="featured-slot-img-wrap">
+              <div class="featured-slot-img" id="slotImg3" onclick="document.getElementById('slotFile3').click()">
+                <div class="slot-upload-placeholder" id="slotPh3"><span>🖼️</span><small>Clica para adicionar imagem</small><small style="color:var(--border)">1600×800px recomendado</small></div>
+                <img id="slotPreview3" class="hidden" alt="Destaque 4">
+                <input type="file" id="slotFile3" accept="image/*" onchange="handleSlotImage(3,event)" style="display:none">
+              </div>
+              <button class="slot-remove-btn hidden" id="slotRemove3" onclick="removeSlotImage(3)">✕ Remover imagem</button>
+            </div>
+            <div class="slot-fields">
+              <div class="form-group"><label>Categoria / Selo</label><input type="text" id="slotEyebrow3" placeholder="Ex: Novidade, Promoção…"></div>
+              <div class="form-group"><label>Título</label><input type="text" id="slotTitle3" placeholder="Título do destaque"></div>
+              <div class="form-group"><label>Descrição</label><textarea id="slotDesc3" rows="2" placeholder="Texto curto..."></textarea></div>
+              <div class="slot-row2">
+                <div class="form-group"><label>Preço</label><input type="text" id="slotPrice3" placeholder="Ex: Desde €299"></div>
+                <div class="form-group"><label>Ligar a categoria</label>
+                  <select id="slotCat3"><option value="">Nenhuma</option><option>Smartphones</option><option>Acessórios</option><option>Capas</option><option>Películas</option></select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div><!-- end featured-slots-grid -->
+        <div style="margin-top:20px;text-align:right;">
+          <button class="btn-sm" onclick="saveAllFeatured()">💾 Guardar e publicar na loja</button>
+        </div>
+      </div>
+
+      <div class="admin-panel">
+        <div class="panel-head"><h3>Banners e avisos</h3></div>
+        <div class="form-group">
+          <label>Texto de aviso no topo da loja (deixar vazio para ocultar)</label>
+          <input type="text" id="cfgAnnouncement" placeholder="Ex: Frete grátis em compras acima de €50">
+        </div>
+        <button class="btn-sm" onclick="saveSiteConfig()">Guardar aviso</button>
+      </div>
+
+      <div class="admin-panel">
+        <div class="panel-head"><h3>Manutenção</h3></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <div>
+            <strong style="font-size:14px;">Modo de manutenção</strong>
+            <p style="color:var(--muted);font-size:12px;margin-top:4px;">Quando ativo, a loja mostra uma página "Em breve" aos visitantes.</p>
+          </div>
+          <div class="toggle-switch" id="maintenanceToggle" onclick="toggleMaintenance()"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GESTÃO DA API -->
+    <section id="view-api" class="admin-section hidden">
+      <div class="admin-topbar"><h2>Gestão da API</h2></div>
+
+      <div class="admin-panel">
+        <div class="panel-head"><h3>Credenciais da API</h3></div>
+        <div class="form-group">
+          <label>Chave pública (publishable key)</label>
+          <div class="api-key-row"><span id="apiKeyPublic">pk_live_d7n4m1c_a8f2c91e4b7d</span><button class="copy-btn" onclick="copyKey('apiKeyPublic')">Copiar</button></div>
+        </div>
+        <div class="form-group">
+          <label>Chave secreta (secret key)</label>
+          <div class="api-key-row"><span id="apiKeySecret">sk_live_••••••••••••••••9f3a</span><button class="copy-btn" onclick="revealSecret()">Mostrar</button></div>
+        </div>
+        <button class="btn-sm outline" onclick="regenerateKeys()">Gerar novas chaves</button>
+      </div>
+
+      <div class="admin-panel">
+        <div class="panel-head"><h3>Integrações</h3></div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Serviço</th><th>Tipo</th><th>Estado</th><th>Ações</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Stripe</strong></td><td>Pagamentos</td><td><span class="tag active">Ativo</span></td><td class="row-actions"><button class="mini-btn">Configurar</button></td></tr>
+              <tr><td><strong>CTT Expresso</strong></td><td>Transporte</td><td><span class="tag active">Ativo</span></td><td class="row-actions"><button class="mini-btn">Configurar</button></td></tr>
+              <tr><td><strong>Mailchimp</strong></td><td>Email marketing</td><td><span class="tag inactive">Inativo</span></td><td class="row-actions"><button class="mini-btn">Ativar</button></td></tr>
+              <tr><td><strong>Google Analytics</strong></td><td>Analytics</td><td><span class="tag active">Ativo</span></td><td class="row-actions"><button class="mini-btn">Configurar</button></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="admin-panel">
+        <div class="panel-head"><h3>Webhooks</h3><button class="btn-sm" onclick="addWebhook()">+ Novo webhook</button></div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Evento</th><th>URL de destino</th><th>Estado</th><th>Ações</th></tr></thead>
+            <tbody id="webhooksBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="admin-panel">
+        <div class="panel-head"><h3>Limites de utilização</h3></div>
+        <div class="stat-cards" style="grid-template-columns:repeat(3,1fr);margin-bottom:0;">
+          <div class="stat-card"><div class="stat-label">Pedidos hoje</div><div class="stat-value">2.4k</div></div>
+          <div class="stat-card"><div class="stat-label">Limite mensal</div><div class="stat-value">100k</div></div>
+          <div class="stat-card"><div class="stat-label">Utilização</div><div class="stat-value">38%</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONFIGURAÇÕES -->
+    <section id="view-config" class="admin-section hidden">
+      <div class="admin-topbar"><h2>Configurações</h2></div>
+
+      <div class="admin-panel">
+        <div class="panel-head"><h3>Métodos de pagamento</h3></div>
+        <div class="gateway-card">
+          <div class="gateway-info">
+            <div class="gateway-icon" style="background:rgba(230,0,0,.12);">📲</div>
+            <div>
+              <div class="gateway-name">MB WAY</div>
+              <div class="gateway-desc">Pagamento instantâneo por telemóvel</div>
+            </div>
+          </div>
+          <div class="toggle-switch" id="mbwayToggle" onclick="toggleMbway()"></div>
+        </div>
+        <div class="gateway-card">
+          <div class="gateway-info">
+            <div class="gateway-icon">💳</div>
+            <div>
+              <div class="gateway-name">Cartão de Crédito/Débito</div>
+              <div class="gateway-desc">Visa, Mastercard via Stripe</div>
+            </div>
+          </div>
+          <div class="toggle-switch on" id="cardToggle" onclick="toggleCardPayment()"></div>
+        </div>
+        <div class="gateway-card">
+          <div class="gateway-info">
+            <div class="gateway-icon">🏦</div>
+            <div>
+              <div class="gateway-name">Transferência Bancária (Multibanco)</div>
+              <div class="gateway-desc">Referência gerada automaticamente</div>
+            </div>
+          </div>
+          <div class="toggle-switch" id="mbReferenceToggle" onclick="toggleMbReference()"></div>
+        </div>
+      </div>
+
+      <div class="admin-panel" id="mbwayConfigPanel">
+        <div class="panel-head">
+          <h3>Configuração MB WAY</h3>
+          <span class="tag active" id="mbwayStatusTag">Ativo</span>
+        </div>
+        <div class="grid-2">
+          <div class="form-group">
+            <label>Entidade SIBS (Merchant ID)</label>
+            <input type="text" id="mbwayMerchantId" placeholder="Ex: 12345">
+          </div>
+          <div class="form-group">
+            <label>Número de telefone associado à loja</label>
+            <input type="text" id="mbwayPhone" placeholder="Ex: 912345678">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Chave de API SIBS / MB WAY (Subscription Key)</label>
+          <div class="api-key-row"><span id="mbwayApiKey">mbw_sub_••••••••••••7d21</span><button class="copy-btn" onclick="revealMbwayKey()">Mostrar</button></div>
+        </div>
+        <div class="grid-2">
+          <div class="form-group">
+            <label>Ambiente</label>
+            <select id="mbwayEnv">
+              <option value="test">Teste (Sandbox)</option>
+              <option value="prod">Produção</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Tempo limite do pedido (segundos)</label>
+            <input type="number" id="mbwayTimeout" value="90">
+          </div>
+        </div>
+        <button class="btn-sm" onclick="saveMbwayConfig()">Guardar configuração MB WAY</button>
+      </div>
+
+      <div class="admin-panel">
+        <div class="panel-head"><h3>Histórico de pagamentos MB WAY</h3></div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>ID Transação</th><th>Cliente</th><th>Telefone</th><th>Valor</th><th>Estado</th><th>Data</th></tr></thead>
+            <tbody id="mbwayPaymentsBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="admin-panel">
+        <div class="panel-head"><h3>Dados da empresa</h3></div>
+        <div class="grid-2">
+          <div class="form-group"><label>Nome da empresa</label><input type="text" id="cfgCompanyName" value="Dynamic Tech Store, Lda."></div>
+          <div class="form-group"><label>NIF</label><input type="text" id="cfgNif" value="PT123456789"></div>
+        </div>
+        <div class="form-group"><label>Email de contacto</label><input type="email" id="cfgCompanyEmail" value="suporte@dynamic.pt"></div>
+        <button class="btn-sm" onclick="showToast('Dados da empresa guardados ✓')">Guardar dados</button>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- ============ PRODUCT MODAL ============ -->
+<div id="productModal" class="modal-overlay hidden">
+  <div class="modal-box">
+    <h3 id="productModalTitle">Novo produto</h3>
+    <input type="hidden" id="pmId">
+
+    <div class="form-group">
+      <label>Fotografia do produto</label>
+      <div class="img-upload-box" id="imgUploadBox" onclick="document.getElementById('pmImageInput').click()">
+        <div class="upload-placeholder" id="uploadPlaceholder">
+          <span class="ic">📷</span>
+          Clica para escolher uma fotografia<br><span style="font-size:11px">JPG ou PNG, até 2MB</span>
+        </div>
+        <img id="pmImagePreview" class="hidden">
+        <input type="file" id="pmImageInput" accept="image/*" onchange="handleImageUpload(event)">
+      </div>
+      <button type="button" class="remove-img-btn hidden" id="removeImgBtn" onclick="removeProductImage()">Remover fotografia</button>
+    </div>
+
+    <div class="form-group"><label>Nome do produto</label><input type="text" id="pmName"></div>
+
+    <div class="form-group"><label>Descrição do produto</label>
+      <textarea id="pmDescription" rows="3" placeholder="Ex: Smartphone com ecrã AMOLED de 6.5”, 128GB de armazenamento e câmara tripla de 50MP."></textarea>
+    </div>
+
+    <div class="grid-2">
+      <div class="form-group">
+        <label>Categoria</label>
+        <select id="pmCategory">
+          <option>Smartphones</option><option>Acessórios</option><option>Capas</option><option>Películas</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Ícone de reserva (emoji, se não houver foto)</label><input type="text" id="pmIcon" placeholder="📱" maxlength="2"></div>
+    </div>
+    <div class="grid-2">
+      <div class="form-group"><label>Preço (€)</label><input type="number" id="pmPrice" step="0.01"></div>
+      <div class="form-group"><label>Preço antigo (opcional)</label><input type="number" id="pmOldPrice" step="0.01"></div>
+    </div>
+    <div class="form-group"><label>Stock</label><input type="number" id="pmStock"></div>
+    <div class="modal-actions">
+      <button class="btn-sm outline" onclick="closeProductModal()">Cancelar</button>
+      <button class="btn-sm" onclick="saveProduct()">Guardar produto</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ PRODUCT DETAIL MODAL (loja) ============ -->
+<div id="productDetailModal" class="modal-overlay hidden">
+  <div class="modal-box" style="width:480px;">
+    <div class="product-detail-img" id="detailImg"></div>
+    <div class="product-detail-cat" id="detailCat"></div>
+    <div class="product-detail-name" id="detailName"></div>
+    <div class="product-detail-desc" id="detailDesc"></div>
+    <div class="product-price-row" style="margin-bottom:20px;">
+      <span class="product-price" id="detailPrice" style="font-size:26px;"></span>
+      <span class="product-oldprice" id="detailOldPrice"></span>
+    </div>
+    <div class="modal-actions" style="justify-content:stretch;">
+      <button class="btn-sm outline" onclick="closeProductDetail()" style="flex:1;">Fechar</button>
+      <button class="btn-sm" id="detailAddBtn" style="flex:1;">Adicionar ao carrinho</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ FEATURED MODAL ============ -->
+<div id="featuredModal" class="modal-overlay hidden">
+  <div class="modal-box">
+    <h3 id="featuredModalTitle">Novo destaque</h3>
+    <input type="hidden" id="fmId">
+
+    <div class="form-group">
+      <label>Imagem do destaque</label>
+      <div class="img-upload-box" id="fmImgUploadBox" onclick="document.getElementById('fmImageInput').click()">
+        <div class="upload-placeholder" id="fmUploadPlaceholder">
+          <span class="ic">🖼️</span>
+          Clica para escolher uma imagem<br><span style="font-size:11px">Ideal: 1600x800px, JPG ou PNG, até 3MB</span>
+        </div>
+        <img id="fmImagePreview" class="hidden">
+        <input type="file" id="fmImageInput" accept="image/*" onchange="handleFeaturedImageUpload(event)">
+      </div>
+      <button type="button" class="remove-img-btn hidden" id="fmRemoveImgBtn" onclick="removeFeaturedImage(event)">Remover imagem</button>
+    </div>
+
+    <div class="form-group"><label>Selo / categoria (opcional)</label><input type="text" id="fmEyebrow" placeholder="Ex: Novidade, Promoção, Lançamento"></div>
+    <div class="form-group"><label>Título</label><input type="text" id="fmTitle" placeholder="Ex: Phantom Z Fold já disponível"></div>
+    <div class="form-group"><label>Descrição</label><textarea id="fmDesc" rows="2" placeholder="Texto curto a destacar a promoção ou produto."></textarea></div>
+    <div class="grid-2">
+      <div class="form-group"><label>Preço a destacar (opcional)</label><input type="text" id="fmPrice" placeholder="Ex: Desde €1.499"></div>
+      <div class="form-group"><label>Ligar a categoria (ao clicar)</label>
+        <select id="fmLinkCategory">
+          <option value="">Nenhuma</option>
+          <option>Smartphones</option><option>Acessórios</option><option>Capas</option><option>Películas</option>
+        </select>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-sm outline" onclick="closeFeaturedModal()">Cancelar</button>
+      <button class="btn-sm" onclick="saveFeatured()">Guardar destaque</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ CLIENT MODAL ============ -->
+<div id="clientModal" class="modal-overlay hidden">
+  <div class="modal-box">
+    <h3 id="clientModalTitle">Novo cliente</h3>
+    <input type="hidden" id="cmId">
+    <div class="form-group"><label>Nome completo</label><input type="text" id="cmName"></div>
+    <div class="form-group"><label>Email</label><input type="email" id="cmEmail"></div>
+    <div class="form-group"><label>Telefone</label><input type="text" id="cmPhone"></div>
+    <div class="form-group">
+      <label>Estado</label>
+      <select id="cmStatus"><option value="active">Ativo</option><option value="inactive">Inativo</option></select>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-sm outline" onclick="closeClientModal()">Cancelar</button>
+      <button class="btn-sm" onclick="saveClient()">Guardar cliente</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ CHECKOUT / PAYMENT MODAL ============ -->
+<div id="checkoutModal" class="modal-overlay hidden">
+  <div class="modal-box" style="width:460px;">
+    <h3 id="checkoutTitle">Finalizar compra</h3>
+
+    <div id="checkoutStepSelect">
+      <div class="form-group"><label>Resumo do pedido</label></div>
+      <div id="checkoutSummary" style="margin-bottom:20px;"></div>
+
+      <div class="form-group"><label>Escolhe o método de pagamento</label></div>
+      <div class="payment-methods" id="paymentMethodsGrid"></div>
+
+      <div id="mbwayPhoneStep" class="hidden">
+        <div class="mbway-box">
+          <div class="mbway-logo"><span class="mb-tag">MB WAY</span><span style="font-size:13px;color:var(--muted)">Pagamento via app</span></div>
+          <div class="form-group">
+            <label>Número de telemóvel associado ao MB WAY</label>
+            <div class="phone-input-row">
+              <span class="phone-prefix">🇵🇹 +351</span>
+              <input type="text" id="mbwayClientPhone" placeholder="912 345 678" maxlength="9">
+            </div>
+          </div>
+          <ul class="mbway-steps">
+            <li><span class="step-num">1</span> Insere o teu número de telemóvel MB WAY.</li>
+            <li><span class="step-num">2</span> Vais receber uma notificação na app MB WAY.</li>
+            <li><span class="step-num">3</span> Confirma o pagamento na app para concluir a compra.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div id="cardStep" class="hidden">
+        <div class="form-group"><label>Número do cartão</label><input type="text" id="cardNumber" placeholder="0000 0000 0000 0000"></div>
+        <div class="grid-2">
+          <div class="form-group"><label>Validade</label><input type="text" id="cardExpiry" placeholder="MM/AA"></div>
+          <div class="form-group"><label>CVC</label><input type="text" id="cardCvc" placeholder="123"></div>
+        </div>
+      </div>
+
+      <div id="mbRefStep" class="hidden">
+        <div class="mbway-box">
+          <strong style="font-size:13px;">Referência Multibanco gerada na próxima etapa</strong>
+          <p style="color:var(--muted);font-size:12px;margin-top:6px;">Entidade, referência e valor serão apresentados para pagamento em qualquer caixa Multibanco ou homebanking.</p>
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn-sm outline" onclick="closeCheckoutModal()">Cancelar</button>
+        <button class="btn-sm" id="checkoutConfirmBtn" onclick="processPayment()">Continuar</button>
+      </div>
+    </div>
+
+    <div id="checkoutStepProcessing" class="hidden">
+      <div class="mbway-box" style="text-align:center;">
+        <div class="mbway-logo" style="justify-content:center;"><span class="mb-tag">MB WAY</span></div>
+        <p style="font-size:14px;color:var(--white);margin-bottom:6px;">A aguardar confirmação no telemóvel</p>
+        <p style="font-size:13px;color:var(--muted);">Número: <strong id="processingPhone">+351 9XX XXX XXX</strong></p>
+        <div class="mbway-status waiting" style="justify-content:center;margin-top:20px;">
+          <div class="spinner"></div> A aguardar aprovação na app MB WAY...
+        </div>
+      </div>
+    </div>
+
+    <div id="checkoutStepResult" class="hidden">
+      <div id="resultSuccess" class="hidden" style="text-align:center;">
+        <div style="font-size:48px;margin-bottom:14px;">✅</div>
+        <h3 style="margin-bottom:10px;">Pagamento aprovado!</h3>
+        <p style="color:var(--muted);font-size:13px;margin-bottom:24px;">O teu pedido foi confirmado e será processado em breve.</p>
+        <button class="btn-sm" onclick="finishCheckout()" style="width:100%;">Concluído</button>
+      </div>
+      <div id="resultError" class="hidden" style="text-align:center;">
+        <div style="font-size:48px;margin-bottom:14px;">❌</div>
+        <h3 style="margin-bottom:10px;">Pagamento não autorizado</h3>
+        <p style="color:var(--muted);font-size:13px;margin-bottom:24px;">Verifica os dados ou tenta novamente.</p>
+        <button class="btn-sm outline" onclick="closeCheckoutModal()" style="width:100%;">Fechar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   DYNAMIC — LOJA + ADMIN
+   Estado persistido em localStorage
+   ============================================================ */
+
+const DB_KEY = 'dynamic_store_db_v1';
+
+function defaultDB(){
+  return {
+    products: [
+      {id:'p1', name:'Galaxy Vortex X5', category:'Smartphones', icon:'📱', image:null, description:'Smartphone topo de gama com ecrã AMOLED de 6.7", 256GB de armazenamento, câmara tripla de 108MP e bateria de 5000mAh com carregamento rápido de 65W.', price:899, oldPrice:999, stock:14, active:true},
+      {id:'p2', name:'Nova Phone 12 Pro', category:'Smartphones', icon:'📱', image:null, description:'Design premium em titânio, processador de última geração, sistema de câmaras com zoom ótico 5x e ecrã ProMotion a 120Hz.', price:1099, oldPrice:null, stock:3, active:true},
+      {id:'p3', name:'AirPulse Buds', category:'Acessórios', icon:'🎧', image:null, description:'Auriculares verdadeiramente sem fios com cancelamento ativo de ruído, até 30h de bateria total e resistência à água IPX4.', price:79, oldPrice:99, stock:42, active:true},
+      {id:'p4', name:'Carregador Rápido 65W', category:'Acessórios', icon:'🔌', image:null, description:'Carregador USB-C de 65W com tecnologia GaN, compacto e compatível com a maioria dos smartphones e portáteis.', price:29, oldPrice:null, stock:0, active:true},
+      {id:'p5', name:'Powerbank 20000mAh', category:'Acessórios', icon:'🔋', image:null, description:'Bateria portátil de alta capacidade com carregamento rápido bidirecional e duas portas USB para carregar dois dispositivos em simultâneo.', price:45, oldPrice:55, stock:25, active:true},
+      {id:'p6', name:'Capa Armor Pro', category:'Capas', icon:'🛡️', image:null, description:'Capa robusta com proteção militar contra quedas até 2 metros, cantos reforçados e acabamento antiderrapante.', price:19, oldPrice:null, stock:60, active:true},
+      {id:'p7', name:'Capa Transparente Slim', category:'Capas', icon:'🛡️', image:null, description:'Capa ultra fina e transparente que mantém o design original do telefone, com proteção contra riscos e amarelecimento.', price:12, oldPrice:15, stock:8, active:true},
+      {id:'p8', name:'Película Vidro 9H', category:'Películas', icon:'✨', image:null, description:'Película de vidro temperado com dureza 9H, resistente a riscos e quedas, com aplicação fácil sem bolhas.', price:9, oldPrice:null, stock:90, active:true},
+      {id:'p9', name:'Película Privacidade', category:'Películas', icon:'✨', image:null, description:'Película com filtro de privacidade que impede que outras pessoas vejam o ecrã em ângulo, mantendo total nitidez de frente.', price:14, oldPrice:18, stock:5, active:true},
+      {id:'p10', name:'Suporte Magnético Carro', category:'Acessórios', icon:'🚗', image:null, description:'Suporte magnético para carro com fixação na grelha de ventilação, rotação 360° e ímanes de alta potência.', price:22, oldPrice:null, stock:33, active:true},
+      {id:'p11', name:'Phantom Z Fold', category:'Smartphones', icon:'📱', image:null, description:'Smartphone dobrável com ecrã interior de 7.6" e exterior de 6.2", multitarefa avançada e charneira reforçada para mais de 200 mil dobragens.', price:1499, oldPrice:1699, stock:6, active:true},
+      {id:'p12', name:'Capa à Prova de Choque', category:'Capas', icon:'🛡️', image:null, description:'Capa híbrida com camada interior de silicone e exterior rígido, certificada para quedas até 3 metros.', price:24, oldPrice:null, stock:0, active:true},
+    ],
+    clients: [
+      {id:'c1', name:'Beatriz Almeida', email:'beatriz.almeida@email.pt', phone:'912 345 678', orders:5, spent:642, status:'active'},
+      {id:'c2', name:'Tiago Ferreira', email:'tiago.ferreira@email.pt', phone:'933 221 109', orders:2, spent:178, status:'active'},
+      {id:'c3', name:'Carla Sousa', email:'carla.sousa@email.pt', phone:'961 778 230', orders:0, spent:0, status:'inactive'},
+      {id:'c4', name:'Diogo Martins', email:'diogo.martins@email.pt', phone:'924 556 781', orders:8, spent:1290, status:'active'},
+    ],
+    orders: [
+      {id:'#3291', client:'Beatriz Almeida', date:'2026-06-18', items:'Galaxy Vortex X5 + Capa Armor', total:918, status:'done'},
+      {id:'#3292', client:'Tiago Ferreira', date:'2026-06-19', items:'AirPulse Buds', total:79, status:'pending'},
+      {id:'#3293', client:'Diogo Martins', date:'2026-06-19', items:'Película Vidro 9H x2', total:18, status:'pending'},
+      {id:'#3294', client:'Carla Sousa', date:'2026-06-20', items:'Powerbank 20000mAh', total:45, status:'done'},
+    ],
+    webhooks: [
+      {event:'order.created', url:'https://api.dynamic.pt/hooks/orders', active:true},
+      {event:'payment.succeeded', url:'https://api.dynamic.pt/hooks/payments', active:true},
+      {event:'stock.low', url:'https://api.dynamic.pt/hooks/stock', active:false},
+    ],
+    featured: [
+      {id:'f0', image:null, eyebrow:'Lançamento', title:'Phantom Z Fold já disponível', desc:'O smartphone dobrável mais avançado da Dynamic. Reserva o teu já.', price:'Desde €1.499', linkCategory:'Smartphones'},
+      {id:'f1', image:null, eyebrow:'Promoção', title:'Até 20% em capas e películas', desc:'Protege o teu telefone com desconto em toda a gama de capas e películas.', price:'', linkCategory:'Capas'},
+      {id:'f2', image:null, eyebrow:'', title:'', desc:'', price:'', linkCategory:''},
+      {id:'f3', image:null, eyebrow:'', title:'', desc:'', price:'', linkCategory:''},
+    ],
+    config: {
+      heroTitle:'O teu telefone.|Equipado a sério.',
+      heroBadge:'Entrega em 24h em Portugal Continental',
+      heroSub:'Smartphones, capas, películas e acessórios originais. Garantia de 2 anos em todos os produtos.',
+      accent:'#3B6EFF',
+      electric:'#00F5D4',
+      announcement:'',
+      maintenance:false
+    },
+    payments: {
+      mbway: {enabled:true, merchantId:'12345', phone:'968829933', apiKey:'mbw_sub_8f3e9a2c4b1d7d21', env:'test', timeout:90},
+      card: {enabled:true},
+      mbReference: {enabled:false}
+    },
+    mbwayPayments: [
+      {id:'MBW-90211', client:'Beatriz Almeida', phone:'+351 912 345 678', amount:918, status:'success', date:'2026-06-18 14:32'},
+      {id:'MBW-90212', client:'Diogo Martins', phone:'+351 924 556 781', amount:45, status:'success', date:'2026-06-19 09:10'},
+      {id:'MBW-90213', client:'Carla Sousa', phone:'+351 961 778 230', amount:18, status:'failed', date:'2026-06-20 11:02'}
+    ],
+    cart: {}
+  };
+}
+
+let db = loadDB();
+
+function loadDB(){
+  try{
+    const raw = localStorage.getItem(DB_KEY);
+    if(raw){
+      const parsed = JSON.parse(raw);
+      // Migração: garante número MB WAY da loja em bases de dados já existentes
+      if(parsed.payments && parsed.payments.mbway && !parsed.payments.mbway.phone){
+        parsed.payments.mbway.phone = '968829933';
+        localStorage.setItem(DB_KEY, JSON.stringify(parsed));
+      }
+      // Migração: garante array de destaques em bases de dados já existentes
+      if(!parsed.featured){
+        parsed.featured = [];
+        localStorage.setItem(DB_KEY, JSON.stringify(parsed));
+      }
+      return parsed;
+    }
+  }catch(e){}
+  const fresh = defaultDB();
+  localStorage.setItem(DB_KEY, JSON.stringify(fresh));
+  return fresh;
+}
+function saveDB(){ localStorage.setItem(DB_KEY, JSON.stringify(db)); }
+
+function fmt(n){ return '€' + Number(n).toFixed(2).replace('.',','); }
+
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 2400);
+}
+
+/* ===================== STORE ===================== */
+let currentCategory = 'all';
+
+function stockTag(stock){
+  if(stock === 0) return {cls:'out', label:'Esgotado'};
+  if(stock <= 5) return {cls:'low', label:'Stock baixo'};
+  return {cls:'in', label:'Em stock'};
+}
+
+function renderStore(){
+  applySiteConfig();
+  const grid = document.getElementById('productsGrid');
+  const list = db.products.filter(p => p.active !== false && (currentCategory==='all' || p.category===currentCategory));
+  grid.innerHTML = '';
+  if(list.length===0){
+    grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1">Sem produtos nesta categoria por agora.</div>';
+    return;
+  }
+  list.forEach(p=>{
+    const st = stockTag(p.stock);
+    const imgContent = p.image ? `<img src="${p.image}" alt="${p.name}">` : p.icon;
+    const card = document.createElement('div');
+    card.className='product-card';
+    card.innerHTML = `
+      <div class="product-img" onclick="openProductDetail('${p.id}')">${imgContent}<span class="stock-badge ${st.cls}">${st.label}</span></div>
+      <div class="product-body">
+        <div class="product-cat">${p.category}</div>
+        <div class="product-name" onclick="openProductDetail('${p.id}')">${p.name}</div>
+        ${p.description ? `<div class="product-desc">${p.description}</div>` : ''}
+        <div class="product-price-row">
+          <span class="product-price">${fmt(p.price)}</span>
+          ${p.oldPrice ? `<span class="product-oldprice">${fmt(p.oldPrice)}</span>` : ''}
+        </div>
+        <button class="add-cart-btn" ${p.stock===0?'disabled':''} onclick="addToCart('${p.id}')">${p.stock===0?'Esgotado':'Adicionar ao carrinho'}</button>
+      </div>`;
+    grid.appendChild(card);
+  });
+}
+
+function openProductDetail(id){
+  const p = db.products.find(x=>x.id===id);
+  if(!p) return;
+  document.getElementById('detailImg').innerHTML = p.image ? `<img src="${p.image}" alt="${p.name}">` : p.icon;
+  document.getElementById('detailCat').textContent = p.category;
+  document.getElementById('detailName').textContent = p.name;
+  document.getElementById('detailDesc').textContent = p.description || 'Sem descrição disponível para este produto.';
+  document.getElementById('detailPrice').textContent = fmt(p.price);
+  document.getElementById('detailOldPrice').textContent = p.oldPrice ? fmt(p.oldPrice) : '';
+  const addBtn = document.getElementById('detailAddBtn');
+  addBtn.disabled = p.stock === 0;
+  addBtn.textContent = p.stock === 0 ? 'Esgotado' : 'Adicionar ao carrinho';
+  addBtn.onclick = () => { addToCart(p.id); closeProductDetail(); };
+  document.getElementById('productDetailModal').classList.remove('hidden');
+}
+function closeProductDetail(){
+  document.getElementById('productDetailModal').classList.add('hidden');
+}
+
+function filterCategory(cat){
+  currentCategory = cat;
+  document.querySelectorAll('.filter-chip').forEach(b=>b.classList.toggle('active', b.dataset.cat===cat));
+  document.querySelectorAll('.nav-link').forEach(a=>a.classList.remove('active'));
+  renderStore();
+  document.getElementById('catalogo').scrollIntoView({behavior:'smooth'});
+}
+
+function applySiteConfig(){
+  const c = db.config;
+  document.documentElement.style.setProperty('--accent', c.accent);
+  document.documentElement.style.setProperty('--electric', c.electric);
+  const titleParts = c.heroTitle.split('|');
+  const h1 = document.querySelector('.hero h1');
+  if(h1) h1.innerHTML = `${titleParts[0]}<br><span class="line-accent">${titleParts[1]||''}</span>`;
+  const badge = document.querySelector('.hero-badge');
+  if(badge) badge.textContent = c.heroBadge;
+  const sub = document.querySelector('.hero p');
+  if(sub) sub.textContent = c.heroSub;
+}
+
+/* ===================== FEATURED CAROUSEL (loja) ===================== */
+let featuredIndex = 0;
+let featuredTimer = null;
+
+function renderFeaturedCarousel(){
+  const wrap = document.getElementById('featuredCarousel');
+  const section = document.getElementById('destaques');
+  // só mostra slides que têm pelo menos título ou imagem
+  const list = (db.featured || []).filter(f => f.title || f.image);
+  if(list.length === 0){
+    section.classList.add('hidden');
+    wrap.innerHTML = '';
+    if(featuredTimer) clearInterval(featuredTimer);
+    return;
+  }
+  section.classList.remove('hidden');
+  featuredIndex = Math.min(featuredIndex, list.length-1);
+
+  let html = '';
+  list.forEach((f,idx)=>{
+    const bg = f.image
+      ? `<div class="fs-bg" style="background-image:url('${f.image}')"></div>`
+      : `<div class="fs-bg no-image">🖼️</div>`;
+    html += `
+      <div class="featured-slide ${idx===featuredIndex?'active':''}" data-idx="${idx}" onclick="handleFeaturedClick('${f.linkCategory||''}')">
+        ${bg}
+        <div class="fs-overlay"></div>
+        <div class="fs-content">
+          ${f.eyebrow ? `<div class="fs-eyebrow">${f.eyebrow}</div>` : ''}
+          <div class="fs-title">${f.title||''}</div>
+          ${f.desc ? `<div class="fs-desc">${f.desc}</div>` : ''}
+          ${f.price ? `<div class="fs-price">${f.price}</div>` : ''}
+          ${f.linkCategory ? `<div class="btn-primary" style="display:inline-block;padding:10px 24px;font-size:13px;border-radius:8px;cursor:pointer;">Ver produtos →</div>` : ''}
+        </div>
+      </div>`;
+  });
+  if(list.length > 1){
+    html += `<button class="carousel-arrow prev" onclick="event.stopPropagation();moveFeatured(-1)">‹</button>
+              <button class="carousel-arrow next" onclick="event.stopPropagation();moveFeatured(1)">›</button>
+              <div class="carousel-dots">`;
+    list.forEach((f,idx)=>{
+      html += `<div class="carousel-dot ${idx===featuredIndex?'active':''}" onclick="event.stopPropagation();goToFeatured(${idx})"></div>`;
+    });
+    html += `</div>`;
+  }
+  wrap.innerHTML = html;
+
+  if(featuredTimer) clearInterval(featuredTimer);
+  if(list.length > 1){
+    featuredTimer = setInterval(()=>moveFeatured(1), 6000);
+  }
+}
+function moveFeatured(delta){
+  const list = (db.featured||[]).filter(f=>f.title||f.image);
+  if(list.length===0) return;
+  featuredIndex = (featuredIndex + delta + list.length) % list.length;
+  renderFeaturedCarousel();
+}
+function goToFeatured(idx){
+  featuredIndex = idx;
+  renderFeaturedCarousel();
+}
+function handleFeaturedClick(category){
+  if(category) filterCategory(category);
+}
+
+/* ===================== FEATURED SLOTS (admin) ===================== */
+// imagens temporárias dos slots (antes de guardar)
+const slotImages = [null, null, null, null];
+
+function loadFeaturedSlots(){
+  // garante sempre 4 entradas
+  while((db.featured||[]).length < 4){
+    const idx = (db.featured||[]).length;
+    if(!db.featured) db.featured = [];
+    db.featured.push({id:'f'+idx, image:null, eyebrow:'', title:'', desc:'', price:'', linkCategory:''});
+  }
+  for(let i=0;i<4;i++){
+    const f = db.featured[i] || {};
+    slotImages[i] = f.image || null;
+    // Preencher campos de texto
+    const set = (id,val)=>{ const el=document.getElementById(id); if(el) el.value=val||''; };
+    set('slotEyebrow'+i, f.eyebrow);
+    set('slotTitle'+i,   f.title);
+    set('slotDesc'+i,    f.desc);
+    set('slotPrice'+i,   f.price);
+    const catEl = document.getElementById('slotCat'+i);
+    if(catEl) catEl.value = f.linkCategory||'';
+    // Imagem
+    updateSlotImageUI(i, f.image);
+  }
+}
+
+function updateSlotImageUI(i, dataUrl){
+  const preview = document.getElementById('slotPreview'+i);
+  const ph      = document.getElementById('slotPh'+i);
+  const imgBox  = document.getElementById('slotImg'+i);
+  const removeBtn = document.getElementById('slotRemove'+i);
+  if(dataUrl){
+    preview.src = dataUrl;
+    preview.classList.remove('hidden');
+    ph.classList.add('hidden');
+    imgBox.classList.add('has-image');
+    removeBtn.classList.remove('hidden');
+  } else {
+    preview.src = '';
+    preview.classList.add('hidden');
+    ph.classList.remove('hidden');
+    imgBox.classList.remove('has-image');
+    removeBtn.classList.add('hidden');
+  }
+}
+
+function handleSlotImage(i, event){
+  const file = event.target.files[0];
+  if(!file) return;
+  if(!file.type.startsWith('image/')){ showToast('Escolhe um ficheiro de imagem válido.'); return; }
+  if(file.size > 3*1024*1024){ showToast('A imagem deve ter no máximo 3MB.'); return; }
+  const reader = new FileReader();
+  reader.onload = e => {
+    slotImages[i] = e.target.result;
+    updateSlotImageUI(i, e.target.result);
+    showToast('Imagem carregada — clica em "Guardar" para publicar ✓');
+  };
+  reader.readAsDataURL(file);
+}
+
+function removeSlotImage(i){
+  slotImages[i] = null;
+  document.getElementById('slotFile'+i).value = '';
+  updateSlotImageUI(i, null);
+}
+
+function saveAllFeatured(){
+  if(!db.featured) db.featured = [];
+  while(db.featured.length < 4){
+    const idx = db.featured.length;
+    db.featured.push({id:'f'+idx, image:null, eyebrow:'', title:'', desc:'', price:'', linkCategory:''});
+  }
+  for(let i=0;i<4;i++){
+    const get = id => { const el=document.getElementById(id); return el?el.value.trim():''; };
+    db.featured[i] = {
+      id: 'f'+i,
+      image:        slotImages[i],
+      eyebrow:      get('slotEyebrow'+i),
+      title:        get('slotTitle'+i),
+      desc:         get('slotDesc'+i),
+      price:        get('slotPrice'+i),
+      linkCategory: get('slotCat'+i),
+    };
+  }
+  saveDB();
+  featuredIndex = 0;
+  renderFeaturedCarousel();
+  showToast('Destaques guardados e publicados na loja ✓');
+}
+
+/* ===================== CART ===================== */
+function addToCart(id){
+  db.cart[id] = (db.cart[id]||0)+1;
+  saveDB();
+  updateCartBadge();
+  renderCart();
+  showToast('Produto adicionado ao carrinho ✓');
+}
+function changeQty(id, delta){
+  db.cart[id] = (db.cart[id]||0)+delta;
+  if(db.cart[id]<=0) delete db.cart[id];
+  saveDB();
+  updateCartBadge();
+  renderCart();
+}
+function removeFromCart(id){
+  delete db.cart[id];
+  saveDB();
+  updateCartBadge();
+  renderCart();
+}
+function updateCartBadge(){
+  const count = Object.values(db.cart).reduce((a,b)=>a+b,0);
+  document.getElementById('cartBadge').textContent = count;
+}
+function renderCart(){
+  const wrap = document.getElementById('cartItems');
+  const ids = Object.keys(db.cart);
+  if(ids.length===0){
+    wrap.innerHTML = '<div class="cart-empty">O teu carrinho está vazio.<br>Adiciona produtos para continuar.</div>';
+    document.getElementById('cartTotal').textContent = fmt(0);
+    return;
+  }
+  let total = 0;
+  wrap.innerHTML = '';
+  ids.forEach(id=>{
+    const p = db.products.find(x=>x.id===id);
+    if(!p) return;
+    const qty = db.cart[id];
+    total += p.price*qty;
+    const row = document.createElement('div');
+    row.className='cart-item';
+    row.innerHTML = `
+      <div class="cart-item-img">${p.icon}</div>
+      <div class="cart-item-info">
+        <strong>${p.name}</strong>
+        <span>${fmt(p.price)} / unid.</span>
+        <div class="qty-controls">
+          <button onclick="changeQty('${id}',-1)">−</button>
+          <span>${qty}</span>
+          <button onclick="changeQty('${id}',1)">+</button>
+        </div>
+      </div>
+      <div>
+        <div class="cart-item-price">${fmt(p.price*qty)}</div>
+        <button class="remove-item" onclick="removeFromCart('${id}')">Remover</button>
+      </div>`;
+    wrap.appendChild(row);
+  });
+  document.getElementById('cartTotal').textContent = fmt(total);
+}
+function openCart(){
+  document.getElementById('cartOverlay').classList.remove('hidden');
+  document.getElementById('cartDrawer').classList.add('open');
+  renderCart();
+}
+function closeCart(){
+  document.getElementById('cartOverlay').classList.add('hidden');
+  document.getElementById('cartDrawer').classList.remove('open');
+}
+function checkout(){
+  if(Object.keys(db.cart).length===0){ showToast('O carrinho está vazio.'); return; }
+  closeCart();
+  openCheckoutModal();
+}
+
+/* ===================== CHECKOUT MODAL ===================== */
+let selectedPaymentMethod = null;
+
+function getCartTotal(){
+  let total = 0;
+  Object.keys(db.cart).forEach(id=>{
+    const p = db.products.find(x=>x.id===id);
+    if(p) total += p.price * db.cart[id];
+  });
+  return total;
+}
+
+function openCheckoutModal(){
+  document.getElementById('checkoutModal').classList.remove('hidden');
+  document.getElementById('checkoutStepSelect').classList.remove('hidden');
+  document.getElementById('checkoutStepProcessing').classList.add('hidden');
+  document.getElementById('checkoutStepResult').classList.add('hidden');
+  document.getElementById('mbwayPhoneStep').classList.add('hidden');
+  document.getElementById('cardStep').classList.add('hidden');
+  document.getElementById('mbRefStep').classList.add('hidden');
+  selectedPaymentMethod = null;
+
+  const summary = document.getElementById('checkoutSummary');
+  let rows = '';
+  Object.keys(db.cart).forEach(id=>{
+    const p = db.products.find(x=>x.id===id);
+    if(!p) return;
+    rows += `<div class="pay-summary-row"><span>${p.icon} ${p.name} x${db.cart[id]}</span><span>${fmt(p.price*db.cart[id])}</span></div>`;
+  });
+  rows += `<div class="pay-summary-total"><span>Total</span><span>${fmt(getCartTotal())}</span></div>`;
+  summary.innerHTML = rows;
+
+  const grid = document.getElementById('paymentMethodsGrid');
+  const pay = db.payments;
+  grid.innerHTML = `
+    <div class="pay-method-card ${!pay.mbway.enabled?'disabled':''}" data-method="mbway" onclick="selectPaymentMethod('mbway')">
+      <div class="pm-icon">📲</div><div class="pm-name">MB WAY</div><div class="pm-sub">${pay.mbway.enabled?'Instantâneo':'Indisponível'}</div>
+    </div>
+    <div class="pay-method-card ${!pay.card.enabled?'disabled':''}" data-method="card" onclick="selectPaymentMethod('card')">
+      <div class="pm-icon">💳</div><div class="pm-name">Cartão</div><div class="pm-sub">${pay.card.enabled?'Visa / Mastercard':'Indisponível'}</div>
+    </div>
+    <div class="pay-method-card ${!pay.mbReference.enabled?'disabled':''}" data-method="mbref" onclick="selectPaymentMethod('mbref')">
+      <div class="pm-icon">🏦</div><div class="pm-name">Multibanco</div><div class="pm-sub">${pay.mbReference.enabled?'Referência':'Indisponível'}</div>
+    </div>`;
+}
+
+function selectPaymentMethod(method){
+  const pay = db.payments;
+  if(method==='mbway' && !pay.mbway.enabled) return;
+  if(method==='card' && !pay.card.enabled) return;
+  if(method==='mbref' && !pay.mbReference.enabled) return;
+
+  selectedPaymentMethod = method;
+  document.querySelectorAll('.pay-method-card').forEach(c=>c.classList.toggle('selected', c.dataset.method===method));
+  document.getElementById('mbwayPhoneStep').classList.toggle('hidden', method!=='mbway');
+  document.getElementById('cardStep').classList.toggle('hidden', method!=='card');
+  document.getElementById('mbRefStep').classList.toggle('hidden', method!=='mbref');
+}
+
+function closeCheckoutModal(){
+  document.getElementById('checkoutModal').classList.add('hidden');
+}
+
+function processPayment(){
+  if(!selectedPaymentMethod){ showToast('Escolhe um método de pagamento.'); return; }
+
+  if(selectedPaymentMethod === 'mbway'){
+    const phone = document.getElementById('mbwayClientPhone').value.trim();
+    if(!/^[0-9]{9}$/.test(phone)){ showToast('Indica um número de telemóvel válido (9 dígitos).'); return; }
+
+    document.getElementById('checkoutStepSelect').classList.add('hidden');
+    document.getElementById('checkoutStepProcessing').classList.remove('hidden');
+    document.getElementById('processingPhone').textContent = '+351 ' + phone;
+
+    // Simula pedido de confirmação MB WAY (SIBS API)
+    setTimeout(()=>{
+      const approved = Math.random() > 0.12; // simulação: ~88% sucesso
+      const total = getCartTotal();
+      const txId = 'MBW-' + Math.floor(90000 + Math.random()*9000);
+
+      db.mbwayPayments.unshift({
+        id: txId,
+        client: 'Cliente Loja',
+        phone: '+351 ' + phone,
+        amount: total,
+        status: approved ? 'success' : 'failed',
+        date: new Date().toLocaleString('pt-PT').slice(0,16)
+      });
+
+      if(approved){
+        db.orders.unshift({
+          id:'#'+Math.floor(3300+Math.random()*900),
+          client:'Cliente Loja',
+          date: new Date().toISOString().slice(0,10),
+          items: Object.keys(db.cart).map(id=>{
+            const p = db.products.find(x=>x.id===id);
+            return p ? `${p.name} x${db.cart[id]}` : '';
+          }).join(', '),
+          total: total,
+          status:'pending'
+        });
+        db.cart = {};
+      }
+      saveDB();
+      updateCartBadge();
+
+      document.getElementById('checkoutStepProcessing').classList.add('hidden');
+      document.getElementById('checkoutStepResult').classList.remove('hidden');
+      document.getElementById('resultSuccess').classList.toggle('hidden', !approved);
+      document.getElementById('resultError').classList.toggle('hidden', approved);
+    }, 2600);
+
+  }else if(selectedPaymentMethod === 'card'){
+    const num = document.getElementById('cardNumber').value.trim();
+    if(num.length < 12){ showToast('Indica um número de cartão válido.'); return; }
+    finalizeNonMbwayOrder('card');
+  }else if(selectedPaymentMethod === 'mbref'){
+    finalizeNonMbwayOrder('mbref');
+  }
+}
+
+function finalizeNonMbwayOrder(method){
+  const total = getCartTotal();
+  db.orders.unshift({
+    id:'#'+Math.floor(3300+Math.random()*900),
+    client:'Cliente Loja',
+    date: new Date().toISOString().slice(0,10),
+    items: Object.keys(db.cart).map(id=>{
+      const p = db.products.find(x=>x.id===id);
+      return p ? `${p.name} x${db.cart[id]}` : '';
+    }).join(', '),
+    total: total,
+    status:'pending'
+  });
+  db.cart = {};
+  saveDB();
+  updateCartBadge();
+  document.getElementById('checkoutStepSelect').classList.add('hidden');
+  document.getElementById('checkoutStepResult').classList.remove('hidden');
+  document.getElementById('resultSuccess').classList.remove('hidden');
+  document.getElementById('resultError').classList.add('hidden');
+}
+
+function finishCheckout(){
+  closeCheckoutModal();
+  showToast('Pedido confirmado com sucesso! 🎉');
+}
+
+/* ===================== VIEW SWITCHING ===================== */
+function goToAdmin(){
+  document.getElementById('storeView').classList.add('hidden');
+  document.getElementById('cartDrawer').classList.remove('open');
+  document.getElementById('cartOverlay').classList.add('hidden');
+  if(sessionStorage.getItem('dynamic_admin_logged')==='1'){
+    showAdminPanel();
+  }else{
+    document.getElementById('adminLoginView').classList.remove('hidden');
+  }
+}
+function goToStore(){
+  document.getElementById('adminLoginView').classList.add('hidden');
+  document.getElementById('adminView').classList.add('hidden');
+  document.getElementById('storeView').classList.remove('hidden');
+}
+
+function tryLogin(){
+  const email = document.getElementById('loginEmail').value.trim();
+  const pass = document.getElementById('loginPassword').value;
+  if(email==='admin@dynamic.pt' && pass==='dynamic2026'){
+    sessionStorage.setItem('dynamic_admin_logged','1');
+    document.getElementById('loginError').classList.add('hidden');
+    showAdminPanel();
+  }else{
+    document.getElementById('loginError').classList.remove('hidden');
+  }
+}
+function logoutAdmin(){
+  sessionStorage.removeItem('dynamic_admin_logged');
+  document.getElementById('adminView').classList.add('hidden');
+  goToStore();
+}
+function showAdminPanel(){
+  document.getElementById('adminLoginView').classList.add('hidden');
+  document.getElementById('adminView').classList.remove('hidden');
+  renderAdminDashboard();
+  renderAdminProducts();
+  renderClients();
+  renderOrders();
+  renderWebhooks();
+  loadSiteConfigForm();
+  loadPaymentConfig();
+  loadFeaturedSlots();
+}
+
+function switchAdminView(view){
+  document.querySelectorAll('.admin-nav-item').forEach(i=>i.classList.toggle('active', i.dataset.view===view));
+  document.querySelectorAll('.admin-section').forEach(s=>s.classList.add('hidden'));
+  document.getElementById('view-'+view).classList.remove('hidden');
+}
+
+/* ===================== ADMIN: DASHBOARD ===================== */
+function renderAdminDashboard(){
+  const pending = db.orders.filter(o=>o.status==='pending').length;
+  const lowStock = db.products.filter(p=>p.stock>0 && p.stock<=5).length;
+  document.getElementById('statPendentes').textContent = pending;
+  document.getElementById('statClientes').textContent = db.clients.length;
+  document.getElementById('statStockBaixo').textContent = lowStock;
+
+  const body = document.getElementById('dashOrdersBody');
+  body.innerHTML = '';
+  db.orders.slice(0,5).forEach(o=>{
+    body.innerHTML += `<tr><td>${o.id}</td><td>${o.client}</td><td>${o.items}</td><td>${fmt(o.total)}</td>
+      <td><span class="tag ${o.status==='done'?'done':'pending'}">${o.status==='done'?'Concluído':'Pendente'}</span></td></tr>`;
+  });
+}
+
+/* ===================== ADMIN: PRODUCTS ===================== */
+let productViewMode = 'table';
+
+function setProductView(mode){
+  productViewMode = mode;
+  document.getElementById('prodTableView').classList.toggle('hidden', mode!=='table');
+  document.getElementById('prodCardsView').classList.toggle('hidden', mode!=='cards');
+  document.getElementById('viewTableBtn').style.background = mode==='table' ? 'var(--accent)' : 'var(--surface2)';
+  document.getElementById('viewTableBtn').style.color = mode==='table' ? '#fff' : 'var(--white)';
+  document.getElementById('viewCardBtn').style.background = mode==='cards' ? 'var(--accent)' : 'var(--surface2)';
+  document.getElementById('viewCardBtn').style.color = mode==='cards' ? '#fff' : 'var(--white)';
+  renderAdminProducts();
+}
+
+function renderAdminProducts(){
+  const search = (document.getElementById('prodSearch')?.value||'').toLowerCase();
+  const catFilter = document.getElementById('prodCatFilter')?.value||'';
+  const body = document.getElementById('adminProductsBody');
+  const cardsWrap = document.getElementById('adminProductsCards');
+  const emptyEl = document.getElementById('prodEmpty');
+
+  const list = db.products.filter(p=>{
+    const matchSearch = p.name.toLowerCase().includes(search) || (p.description||'').toLowerCase().includes(search);
+    const matchCat = !catFilter || p.category===catFilter;
+    return matchSearch && matchCat;
+  });
+
+  document.getElementById('prodCount').textContent = `(${list.length} produto${list.length!==1?'s':''})`;
+
+  const isEmpty = list.length===0;
+  if(body) body.innerHTML='';
+  if(cardsWrap) cardsWrap.innerHTML='';
+  emptyEl?.classList.toggle('hidden', !isEmpty);
+  document.getElementById('prodTableView')?.classList.toggle('hidden', isEmpty || productViewMode!=='table');
+  document.getElementById('prodCardsView')?.classList.toggle('hidden', isEmpty || productViewMode!=='cards');
+
+  if(isEmpty) return;
+
+  list.forEach(p=>{
+    const st = stockTag(p.stock);
+    const thumb = p.image
+      ? `<div class="prod-thumb-cell"><img src="${p.image}" alt="${p.name}"></div>`
+      : `<div class="prod-thumb-cell">${p.icon}</div>`;
+
+    const saving = p.oldPrice ? Math.round((1 - p.price/p.oldPrice)*100) : null;
+    const savingHtml = saving ? `<span class="saving-tag">−${saving}%</span>` : '<span style="color:var(--muted);font-size:12px;">—</span>';
+
+    // TABELA
+    if(body){
+      const stockColor = p.stock===0?'var(--danger)':p.stock<=5?'var(--warn)':'var(--ok)';
+      body.innerHTML += `
+        <tr>
+          <td>${thumb}</td>
+          <td class="prod-name-cell">
+            <strong>${p.name}</strong>
+            <span>${p.description||'<em style="color:var(--border)">Sem descrição</em>'}</span>
+          </td>
+          <td><span class="tag active" style="font-size:11px;">${p.category}</span></td>
+          <td>
+            <div class="price-tag">${fmt(p.price)}</div>
+          </td>
+          <td>
+            ${p.oldPrice ? `<span class="price-old">${fmt(p.oldPrice)}</span>` : '<span style="color:var(--muted);font-size:12px;">—</span>'}
+          </td>
+          <td>${savingHtml}</td>
+          <td>
+            <span class="stock-num" style="color:${stockColor}">${p.stock}</span>
+            <span class="tag ${st.cls}" style="margin-left:6px;font-size:10px;">${st.label}</span>
+          </td>
+          <td><span class="tag ${p.active!==false?'active':'inactive'}">${p.active!==false?'Ativo':'Inativo'}</span></td>
+          <td class="row-actions">
+            <button class="mini-btn" onclick="openProductModal('${p.id}')">✏️ Editar</button>
+            <button class="mini-btn" onclick="toggleProductActive('${p.id}')">${p.active!==false?'🚫 Ocultar':'👁 Mostrar'}</button>
+            <button class="mini-btn danger" onclick="deleteProduct('${p.id}')">🗑 Eliminar</button>
+          </td>
+        </tr>`;
+    }
+
+    // CARDS
+    if(cardsWrap){
+      const imgHtml = p.image ? `<img src="${p.image}" alt="${p.name}">` : p.icon;
+      const card = document.createElement('div');
+      card.className = 'admin-prod-card';
+      card.innerHTML = `
+        <div class="admin-prod-card-img">${imgHtml}
+          <span class="stock-badge ${st.cls}" style="position:absolute;top:8px;left:8px;">${st.label}</span>
+        </div>
+        <div class="admin-prod-card-body">
+          <div class="admin-prod-card-cat">${p.category}</div>
+          <div class="admin-prod-card-name">${p.name}</div>
+          <div class="admin-prod-card-price">${fmt(p.price)} ${p.oldPrice?`<span class="price-old">${fmt(p.oldPrice)}</span>`:''}${saving?` <span class="saving-tag">−${saving}%</span>`:''}</div>
+          <div class="admin-prod-card-actions">
+            <button class="mini-btn" onclick="openProductModal('${p.id}')">✏️ Editar</button>
+            <button class="mini-btn danger" onclick="deleteProduct('${p.id}')">🗑</button>
+          </div>
+        </div>`;
+      cardsWrap.appendChild(card);
+    }
+  });
+}
+
+function toggleProductActive(id){
+  const p = db.products.find(x=>x.id===id);
+  if(!p) return;
+  p.active = p.active===false ? true : false;
+  saveDB();
+  renderAdminProducts();
+  renderStore();
+  showToast(p.active ? 'Produto visível na loja ✓' : 'Produto oculto da loja.');
+}
+
+let currentProductImage = null;
+
+function openProductModal(id){
+  document.getElementById('productModal').classList.remove('hidden');
+  resetImageUploadUI();
+  if(id){
+    const p = db.products.find(x=>x.id===id);
+    document.getElementById('productModalTitle').textContent = 'Editar produto';
+    document.getElementById('pmId').value = p.id;
+    document.getElementById('pmName').value = p.name;
+    document.getElementById('pmDescription').value = p.description || '';
+    document.getElementById('pmCategory').value = p.category;
+    document.getElementById('pmIcon').value = p.icon;
+    document.getElementById('pmPrice').value = p.price;
+    document.getElementById('pmOldPrice').value = p.oldPrice||'';
+    document.getElementById('pmStock').value = p.stock;
+    if(p.image){
+      currentProductImage = p.image;
+      showImagePreview(p.image);
+    }
+  }else{
+    document.getElementById('productModalTitle').textContent = 'Novo produto';
+    ['pmId','pmName','pmOldPrice','pmDescription'].forEach(i=>document.getElementById(i).value='');
+    document.getElementById('pmIcon').value='📦';
+    document.getElementById('pmPrice').value='';
+    document.getElementById('pmStock').value='';
+    document.getElementById('pmCategory').value='Smartphones';
+  }
+}
+function closeProductModal(){ document.getElementById('productModal').classList.add('hidden'); }
+
+function resetImageUploadUI(){
+  currentProductImage = null;
+  document.getElementById('pmImagePreview').classList.add('hidden');
+  document.getElementById('pmImagePreview').src = '';
+  document.getElementById('uploadPlaceholder').classList.remove('hidden');
+  document.getElementById('removeImgBtn').classList.add('hidden');
+  document.getElementById('pmImageInput').value = '';
+}
+function showImagePreview(dataUrl){
+  document.getElementById('pmImagePreview').src = dataUrl;
+  document.getElementById('pmImagePreview').classList.remove('hidden');
+  document.getElementById('uploadPlaceholder').classList.add('hidden');
+  document.getElementById('removeImgBtn').classList.remove('hidden');
+}
+function handleImageUpload(event){
+  const file = event.target.files[0];
+  if(!file) return;
+  if(!file.type.startsWith('image/')){ showToast('Escolhe um ficheiro de imagem válido.'); return; }
+  if(file.size > 2*1024*1024){ showToast('A imagem deve ter no máximo 2MB.'); return; }
+  const reader = new FileReader();
+  reader.onload = (e)=>{
+    currentProductImage = e.target.result;
+    showImagePreview(currentProductImage);
+  };
+  reader.readAsDataURL(file);
+}
+function removeProductImage(event){
+  if(event) event.stopPropagation();
+  resetImageUploadUI();
+}
+
+function saveProduct(){
+  const id = document.getElementById('pmId').value;
+  const name = document.getElementById('pmName').value.trim();
+  if(!name){ showToast('Indica o nome do produto.'); return; }
+  const data = {
+    name,
+    description: document.getElementById('pmDescription').value.trim(),
+    category: document.getElementById('pmCategory').value,
+    icon: document.getElementById('pmIcon').value || '📦',
+    image: currentProductImage,
+    price: parseFloat(document.getElementById('pmPrice').value) || 0,
+    oldPrice: document.getElementById('pmOldPrice').value ? parseFloat(document.getElementById('pmOldPrice').value) : null,
+    stock: parseInt(document.getElementById('pmStock').value) || 0,
+    active: true
+  };
+  if(id){
+    const idx = db.products.findIndex(p=>p.id===id);
+    db.products[idx] = {...db.products[idx], ...data};
+  }else{
+    data.id = 'p'+Date.now();
+    db.products.push(data);
+  }
+  saveDB();
+  closeProductModal();
+  renderAdminProducts();
+  renderAdminDashboard();
+  renderStore();
+  showToast('Produto guardado com sucesso ✓');
+}
+function deleteProduct(id){
+  if(!confirm('Eliminar este produto?')) return;
+  db.products = db.products.filter(p=>p.id!==id);
+  saveDB();
+  renderAdminProducts();
+  renderAdminDashboard();
+  renderStore();
+  showToast('Produto eliminado.');
+}
+
+/* ===================== ADMIN: CLIENTS ===================== */
+function renderClients(){
+  const search = (document.getElementById('clientSearch')?.value||'').toLowerCase();
+  const body = document.getElementById('clientsBody');
+  body.innerHTML='';
+  const list = db.clients.filter(c=>c.name.toLowerCase().includes(search) || c.email.toLowerCase().includes(search));
+  if(list.length===0){ body.innerHTML = '<tr><td colspan="7"><div class="empty-state">Nenhum cliente encontrado.</div></td></tr>'; return; }
+  list.forEach(c=>{
+    body.innerHTML += `<tr>
+      <td><strong>${c.name}</strong></td>
+      <td>${c.email}</td>
+      <td>${c.phone}</td>
+      <td>${c.orders}</td>
+      <td>${fmt(c.spent)}</td>
+      <td><span class="tag ${c.status==='active'?'active':'inactive'}">${c.status==='active'?'Ativo':'Inativo'}</span></td>
+      <td class="row-actions">
+        <button class="mini-btn" onclick="openClientModal('${c.id}')">Editar</button>
+        <button class="mini-btn danger" onclick="deleteClient('${c.id}')">Eliminar</button>
+      </td>
+    </tr>`;
+  });
+}
+
+function openClientModal(id){
+  document.getElementById('clientModal').classList.remove('hidden');
+  if(id){
+    const c = db.clients.find(x=>x.id===id);
+    document.getElementById('clientModalTitle').textContent = 'Editar cliente';
+    document.getElementById('cmId').value = c.id;
+    document.getElementById('cmName').value = c.name;
+    document.getElementById('cmEmail').value = c.email;
+    document.getElementById('cmPhone').value = c.phone;
+    document.getElementById('cmStatus').value = c.status;
+  }else{
+    document.getElementById('clientModalTitle').textContent = 'Novo cliente';
+    ['cmId','cmName','cmEmail','cmPhone'].forEach(i=>document.getElementById(i).value='');
+    document.getElementById('cmStatus').value='active';
+  }
+}
+function closeClientModal(){ document.getElementById('clientModal').classList.add('hidden'); }
+
+function saveClient(){
+  const id = document.getElementById('cmId').value;
+  const name = document.getElementById('cmName').value.trim();
+  const email = document.getElementById('cmEmail').value.trim();
+  if(!name || !email){ showToast('Preenche nome e email.'); return; }
+  const data = {
+    name, email,
+    phone: document.getElementById('cmPhone').value.trim(),
+    status: document.getElementById('cmStatus').value
+  };
+  if(id){
+    const idx = db.clients.findIndex(c=>c.id===id);
+    db.clients[idx] = {...db.clients[idx], ...data};
+  }else{
+    data.id = 'c'+Date.now();
+    data.orders = 0;
+    data.spent = 0;
+    db.clients.push(data);
+  }
+  saveDB();
+  closeClientModal();
+  renderClients();
+  renderAdminDashboard();
+  showToast('Cliente guardado com sucesso ✓');
+}
+function deleteClient(id){
+  if(!confirm('Eliminar este cliente?')) return;
+  db.clients = db.clients.filter(c=>c.id!==id);
+  saveDB();
+  renderClients();
+  renderAdminDashboard();
+  showToast('Cliente eliminado.');
+}
+
+/* ===================== ADMIN: ORDERS ===================== */
+function renderOrders(){
+  const body = document.getElementById('ordersBody');
+  body.innerHTML='';
+  db.orders.forEach(o=>{
+    body.innerHTML += `<tr>
+      <td>${o.id}</td><td>${o.client}</td><td>${o.date}</td><td>${o.items}</td><td>${fmt(o.total)}</td>
+      <td><span class="tag ${o.status==='done'?'done':'pending'}">${o.status==='done'?'Concluído':'Pendente'}</span></td>
+      <td class="row-actions">
+        <button class="mini-btn" onclick="toggleOrderStatus('${o.id}')">${o.status==='done'?'Marcar pendente':'Marcar concluído'}</button>
+      </td>
+    </tr>`;
+  });
+}
+function toggleOrderStatus(id){
+  const o = db.orders.find(x=>x.id===id);
+  o.status = o.status==='done' ? 'pending' : 'done';
+  saveDB();
+  renderOrders();
+  renderAdminDashboard();
+}
+
+/* ===================== ADMIN: PÁGINA (SITE CONFIG) ===================== */
+function loadSiteConfigForm(){
+  const c = db.config;
+  const parts = c.heroTitle.split('|');
+  document.getElementById('cfgHeroTitle').value = parts[0];
+  document.getElementById('cfgHeroBadge').value = c.heroBadge;
+  document.getElementById('cfgHeroSub').value = c.heroSub;
+  document.getElementById('cfgAccent').value = c.accent;
+  document.getElementById('cfgElectric').value = c.electric;
+  document.getElementById('cfgAnnouncement').value = c.announcement;
+  document.getElementById('maintenanceToggle').classList.toggle('on', c.maintenance);
+}
+function saveSiteConfig(){
+  db.config.heroTitle = document.getElementById('cfgHeroTitle').value + '|Equipado a sério.';
+  db.config.heroBadge = document.getElementById('cfgHeroBadge').value;
+  db.config.heroSub = document.getElementById('cfgHeroSub').value;
+  db.config.accent = document.getElementById('cfgAccent').value;
+  db.config.electric = document.getElementById('cfgElectric').value;
+  db.config.announcement = document.getElementById('cfgAnnouncement').value;
+  saveDB();
+  applySiteConfig();
+  showToast('Alterações guardadas e aplicadas à loja ✓');
+}
+function toggleMaintenance(){
+  db.config.maintenance = !db.config.maintenance;
+  document.getElementById('maintenanceToggle').classList.toggle('on', db.config.maintenance);
+  saveDB();
+  showToast(db.config.maintenance ? 'Modo de manutenção ativado.' : 'Modo de manutenção desativado.');
+}
+
+/* ===================== ADMIN: API ===================== */
+let secretRevealed = false;
+function copyKey(elId){
+  const text = document.getElementById(elId).textContent;
+  navigator.clipboard?.writeText(text);
+  showToast('Chave copiada para a área de transferência ✓');
+}
+function revealSecret(){
+  const el = document.getElementById('apiKeySecret');
+  secretRevealed = !secretRevealed;
+  el.textContent = secretRevealed ? 'sk_live_9f8e7d6c5b4a3211f0e9d8c79f3a' : 'sk_live_••••••••••••••••9f3a';
+}
+function regenerateKeys(){
+  if(!confirm('Gerar novas chaves? As chaves antigas deixarão de funcionar.')) return;
+  const rand = ()=>Math.random().toString(16).slice(2,10);
+  document.getElementById('apiKeyPublic').textContent = 'pk_live_'+rand()+rand();
+  document.getElementById('apiKeySecret').textContent = 'sk_live_••••••••••••••••'+rand().slice(0,4);
+  secretRevealed = false;
+  showToast('Novas chaves geradas com sucesso ✓');
+}
+function renderWebhooks(){
+  const body = document.getElementById('webhooksBody');
+  body.innerHTML='';
+  db.webhooks.forEach((w,idx)=>{
+    body.innerHTML += `<tr>
+      <td><strong>${w.event}</strong></td>
+      <td style="font-family:'Courier New',monospace;font-size:12px;color:var(--muted)">${w.url}</td>
+      <td><span class="tag ${w.active?'active':'inactive'}">${w.active?'Ativo':'Inativo'}</span></td>
+      <td class="row-actions">
+        <button class="mini-btn" onclick="toggleWebhook(${idx})">${w.active?'Desativar':'Ativar'}</button>
+        <button class="mini-btn danger" onclick="removeWebhook(${idx})">Remover</button>
+      </td>
+    </tr>`;
+  });
+}
+function toggleWebhook(idx){
+  db.webhooks[idx].active = !db.webhooks[idx].active;
+  saveDB();
+  renderWebhooks();
+}
+function removeWebhook(idx){
+  db.webhooks.splice(idx,1);
+  saveDB();
+  renderWebhooks();
+}
+function addWebhook(){
+  const event = prompt('Nome do evento (ex: order.created):');
+  if(!event) return;
+  const url = prompt('URL de destino:');
+  if(!url) return;
+  db.webhooks.push({event, url, active:true});
+  saveDB();
+  renderWebhooks();
+  showToast('Webhook adicionado ✓');
+}
+
+/* ===================== ADMIN: PAGAMENTOS / MBWAY ===================== */
+function loadPaymentConfig(){
+  const pay = db.payments;
+  document.getElementById('mbwayToggle').classList.toggle('on', pay.mbway.enabled);
+  document.getElementById('cardToggle').classList.toggle('on', pay.card.enabled);
+  document.getElementById('mbReferenceToggle').classList.toggle('on', pay.mbReference.enabled);
+  document.getElementById('mbwayStatusTag').textContent = pay.mbway.enabled ? 'Ativo' : 'Inativo';
+  document.getElementById('mbwayStatusTag').className = 'tag ' + (pay.mbway.enabled ? 'active' : 'inactive');
+  document.getElementById('mbwayMerchantId').value = pay.mbway.merchantId;
+  document.getElementById('mbwayPhone').value = pay.mbway.phone;
+  document.getElementById('mbwayEnv').value = pay.mbway.env;
+  document.getElementById('mbwayTimeout').value = pay.mbway.timeout;
+  renderMbwayPaymentsHistory();
+}
+
+function toggleMbway(){
+  db.payments.mbway.enabled = !db.payments.mbway.enabled;
+  saveDB();
+  loadPaymentConfig();
+  showToast(db.payments.mbway.enabled ? 'MB WAY ativado na loja ✓' : 'MB WAY desativado.');
+}
+function toggleCardPayment(){
+  db.payments.card.enabled = !db.payments.card.enabled;
+  saveDB();
+  loadPaymentConfig();
+  showToast(db.payments.card.enabled ? 'Pagamento por cartão ativado ✓' : 'Pagamento por cartão desativado.');
+}
+function toggleMbReference(){
+  db.payments.mbReference.enabled = !db.payments.mbReference.enabled;
+  saveDB();
+  loadPaymentConfig();
+  showToast(db.payments.mbReference.enabled ? 'Referência Multibanco ativada ✓' : 'Referência Multibanco desativada.');
+}
+
+let mbwayKeyRevealed = false;
+function revealMbwayKey(){
+  const el = document.getElementById('mbwayApiKey');
+  mbwayKeyRevealed = !mbwayKeyRevealed;
+  el.textContent = mbwayKeyRevealed ? db.payments.mbway.apiKey : 'mbw_sub_••••••••••••7d21';
+}
+
+function saveMbwayConfig(){
+  db.payments.mbway.merchantId = document.getElementById('mbwayMerchantId').value.trim();
+  db.payments.mbway.phone = document.getElementById('mbwayPhone').value.trim();
+  db.payments.mbway.env = document.getElementById('mbwayEnv').value;
+  db.payments.mbway.timeout = parseInt(document.getElementById('mbwayTimeout').value) || 90;
+  saveDB();
+  showToast('Configuração MB WAY guardada com sucesso ✓');
+}
+
+function renderMbwayPaymentsHistory(){
+  const body = document.getElementById('mbwayPaymentsBody');
+  if(!body) return;
+  body.innerHTML = '';
+  if(db.mbwayPayments.length===0){
+    body.innerHTML = '<tr><td colspan="6"><div class="empty-state">Ainda sem transações MB WAY.</div></td></tr>';
+    return;
+  }
+  db.mbwayPayments.forEach(p=>{
+    const tagClass = p.status==='success' ? 'done' : 'out';
+    const label = p.status==='success' ? 'Aprovado' : 'Falhado';
+    body.innerHTML += `<tr>
+      <td style="font-family:'Courier New',monospace;font-size:12px;">${p.id}</td>
+      <td>${p.client}</td>
+      <td>${p.phone}</td>
+      <td>${fmt(p.amount)}</td>
+      <td><span class="tag ${tagClass}">${label}</span></td>
+      <td style="color:var(--muted);font-size:12px;">${p.date}</td>
+    </tr>`;
+  });
+}
+
+/* ===================== INIT ===================== */
+renderStore();
+updateCartBadge();
+</script>
+</body>
+</html>
